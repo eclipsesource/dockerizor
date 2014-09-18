@@ -1,0 +1,86 @@
+ext.virgoProjects = [
+	project(':vts'),
+	project(':vjs'),
+	project(':vrs')
+]
+
+buildscript {
+	repositories {
+		mavenLocal()
+		jcenter()
+	}
+	dependencies {
+		classpath 'se.transmode.gradle:gradle-docker:1.4+'
+		classpath 'com.eclipsesource:dockerizor:0.1+'
+	}
+}
+
+configure(virgoProjects) {
+	apply plugin: "java"
+	apply plugin: 'eclipse'
+
+	compileJava {
+		sourceCompatibility = '1.7'
+		targetCompatibility = '1.7'
+	}
+
+	eclipse {
+		jdt {
+			sourceCompatibility = '1.7'
+			targetCompatibility = '1.7'
+		}
+	}
+
+	ext {
+		springframeworkVersion = '3.2.4.RELEASE' // EBR doesn't contain all 3.2.5 artifacts :(
+		aspectjWeaverVersion = '1.7.2.RELEASE'
+		cglibVersion = '2.2'
+
+		rapVersion = '2.3.0'
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "http://repository.springsource.com/maven/bundles/external" }
+		maven { url "http://repository.springsource.com/maven/bundles/release" }
+	}
+}
+
+configure(virgoProjects) {
+	apply plugin: 'docker'
+
+	docker {
+		baseImage = 'ubuntu:14.04'
+		maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
+
+		useApi true
+		hostUrl 'http://localhost:4243'
+		version 'latest'
+	}
+}
+
+configure(virgoProjects) {
+	dependencies {
+		// only needed when using 3.2.4 in Virgo container
+		runtime "org.aspectj:com.springsource.org.aspectj.weaver:${aspectjWeaverVersion}"
+
+		runtime "org.springframework:org.springframework.aop:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.aspects:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.beans:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.context:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.context.support:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.core:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.expression:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.jdbc:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.jms:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.orm:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.oxm:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.transaction:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.web:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.web.servlet:${springframeworkVersion}"
+		runtime "org.springframework:org.springframework.web.portlet:${springframeworkVersion}"
+	}
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '2.0' }

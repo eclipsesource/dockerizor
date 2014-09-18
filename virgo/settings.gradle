@@ -1,0 +1,5 @@
+rootProject.name = 'virgo'
+
+include 'vts'
+include 'vjs'
+include 'vrs'

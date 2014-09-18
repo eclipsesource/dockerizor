@@ -8,6 +8,7 @@ class Dockerizor implements Plugin<Project> {
 	void apply(Project project) {
 		project.extensions.create("dockerizor", DockerizorExtension)
 		project.dockerizor.with {
+			javaVersion = '1.7'
 			virgoVersion = '3.6.3.RELEASE'
 			virgoFlavour = 'VTS'
 			removeAdminConsole = true
@@ -90,7 +91,7 @@ class Dockerizor implements Plugin<Project> {
 				switch (project.dockerizor.embeddedSpringVersion) {
 					// TODO - automagically add or check if Spring is available in runtime dependencies
 					case '3.1.0.RELEASE':
-						println "Ignoring request to use default Spring version."
+						println "Skipping request to add default Spring version."
 						break
 					case '3.2.4.RELEASE':
 						println "Replacing Spring 3.1.0.RELEASE with ${project.dockerizor.embeddedSpringVersion} in ${virgoHome}/repository/ext"

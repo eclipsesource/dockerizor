@@ -1,0 +1,10 @@
+apply plugin: 'dockerizor'
+
+dockerizor {
+	virgoFlavour = 'VTS'
+	removeAdminConsole = false
+	removeSplash = false
+
+	virgoVersion = '3.6.3.RELEASE'
+	imageName = 'vts'
+}
