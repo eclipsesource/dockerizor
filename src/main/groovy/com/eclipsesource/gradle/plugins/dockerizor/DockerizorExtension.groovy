@@ -1,9 +1,12 @@
 package com.eclipsesource.gradle.plugins.dockerizor
 
+import se.transmode.gradle.plugins.docker.DockerTask
+
 class DockerizorExtension {
 	String javaVersion
 	String virgoVersion
 	String virgoFlavour
+	String virgoHome
 	String hostname
 	Boolean removeAdminConsole
 	Boolean removeSplash
@@ -14,6 +17,12 @@ class DockerizorExtension {
 	String[] binFiles
 	String embeddedSpringVersion
 	String imageName
+
+	Closure closure = {}
+
+	def postProcessor(DockerTask task) {
+		closure(task)
+	}
 
 	String getArchiveName() {
 		switch (virgoFlavour) {
