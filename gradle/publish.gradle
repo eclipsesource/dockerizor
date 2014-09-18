@@ -1,0 +1,43 @@
+apply plugin: 'maven-publish'
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+
+			pom.withXml {
+				asNode().with {
+
+					appendNode('name', 'dockerizor')
+					appendNode('description', 'Gradle plugin to build und publish Docker images for Virgo powered applications.')
+					appendNode('url', 'https://github.com/eclipsesource/dockerizor')
+					appendNode('inceptionYear', '2014')
+
+					appendNode('licenses').appendNode('license').with {
+						appendNode('name', 'Eclipse Public License - v 1.0')
+						appendNode('url', 'https://www.eclipse.org/legal/epl-v10.html')
+						appendNode('distribution', 'repo')
+					}
+
+					appendNode('developers').appendNode('developer').with {
+						appendNode('id', 'fwaibel')
+						appendNode('name', 'Florian Waibel')
+						appendNode('email', 'fwaibel@eclipsesource.com')
+						appendNode('roles').appendNode('role', 'Developer')
+					}
+
+					appendNode('issueManagement').with {
+						appendNode('system', 'GitHub')
+						appendNode('url', 'https://github.com/eclipsesource/dockerizor/issues')
+					}
+
+					appendNode('scm').with {
+						appendNode('connection', 'https://github.com/eclipsesource/dockerizor.git')
+						appendNode('developerConnection', 'git@github.com:eclipsesource/dockerizor.git')
+						appendNode('url', 'https://github.com/eclipsesource/dockerizor')
+					}
+				}
+			}
+		}
+	}
+}

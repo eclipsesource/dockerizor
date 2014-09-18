@@ -1,0 +1,22 @@
+apply plugin: 'groovy'
+
+apply plugin: 'maven'
+
+repositories {
+	mavenCentral()
+	jcenter()
+}
+
+dependencies {
+	compile gradleApi()
+	compile localGroovy()
+
+	compile 'se.transmode.gradle:gradle-docker:1.2'
+}
+
+group = 'com.eclipsesource'
+version = '0.1-SNAPSHOT'
+
+apply from: file('gradle/publish.gradle')
+
+task wrapper(type: Wrapper) { gradleVersion = '2.0' }
