@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/eclipsesource/dockerizor.svg)](https://travis-ci.org/eclipsesource/dockerizor)
+
 dockerizor
 ==========
 
