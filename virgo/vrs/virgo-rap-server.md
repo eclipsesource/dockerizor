@@ -17,7 +17,7 @@ Change into the directory that contains your Dockerfile and build your image.
 
 # Running the Container
 
-The following command starts the Virgo Server for Apache Tomcat in a Docker container and exposes the port ``8080``.
+The following command starts the Virgo RAP Server in a Docker container and exposes the port ``8080``.
 
     docker run -d --name="virgo-rap-server" --publish=8080:8080 -t eclipsesource/virgo-rap-server:latest
 
