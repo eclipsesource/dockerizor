@@ -2,9 +2,9 @@ apply plugin: 'dockerizor'
 
 dockerizor {
 	virgoFlavour = 'VRS'
-	removeAdminConsole = false
-	removeSplash = false
+	removeAdminConsole = true
+	removeSplash = true
 
 	virgoVersion = 'latest'
-	imageName = 'vrs'
+	imageName = 'virgo-rap-server'
 }

@@ -2,9 +2,9 @@ apply plugin: 'dockerizor'
 
 dockerizor {
 	virgoFlavour = 'VJS'
-	removeAdminConsole = false
-	removeSplash = false
+	removeAdminConsole = true
+	removeSplash = true
 
-	virgoVersion = '3.6.3.RELEASE'
-	imageName = 'vjs'
+	virgoVersion = 'latest'
+	imageName = 'virgo-jetty-server'
 }

@@ -1,4 +1,4 @@
-rootProject.name = 'virgo'
+rootProject.name = 'eclipsesource'
 
 include 'vts'
 include 'vjs'

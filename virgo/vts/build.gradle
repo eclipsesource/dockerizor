@@ -2,9 +2,9 @@ apply plugin: 'dockerizor'
 
 dockerizor {
 	virgoFlavour = 'VTS'
-	removeAdminConsole = false
-	removeSplash = false
+	removeAdminConsole = true
+	removeSplash = true
 
-	virgoVersion = '3.6.3.RELEASE'
-	imageName = 'vts'
+	virgoVersion = 'latest'
+	imageName = 'virgo-tomcat-server'
 }
