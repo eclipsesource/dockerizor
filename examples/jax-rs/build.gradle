@@ -1,0 +1,12 @@
+apply plugin: 'osgi'
+
+jar {
+    manifest {
+        version = '1.0.0'
+        name = 'OSGi JAX-RS Connector DS Example'
+        attributes( 'Bundle-SymbolicName': 'com.eclipsesource.jaxrs.connector.example.ds')
+        attributes( 'Bundle-Vendor': 'EclipseSource')
+        attributes( 'Built-By': "Gradle ${gradle.gradleVersion}" )
+        attributes( 'Service-Component': "OSGI-INF/*.xml" )
+    }
+}

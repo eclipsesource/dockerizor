@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plan name="jax-rs-example" version="1.0.0" scoped="false" atomic="false" xmlns="http://www.eclipse.org/virgo/schema/plan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+		        http://www.eclipse.org/virgo/schema/plan
+		        http://www.eclipse.org/virgo/schema/plan/eclipse-virgo-plan.xsd">
+
+	<artifact type="bundle" name="org.eclipse.equinox.http.servlet" version="1.1.300" />
+	<artifact type="bundle" name="org.eclipse.equinox.http.jetty" version="3.0.1" />
+
+	<artifact type="bundle" name="com.eclipsesource.jaxrs.jersey-all" version="2.10.1" />
+	<artifact type="bundle" name="com.google.gson" version="2.2.4" />
+	<artifact type="bundle" name="com.eclipsesource.jaxrs.publisher" version="4.1.0" />
+	<artifact type="bundle" name="com.eclipsesource.jaxrs.provider.gson" version="2.0.0" />
+
+	<artifact type="bundle" name="com.eclipsesource.jaxrs.connector.example.ds" version="0" />
+</plan>

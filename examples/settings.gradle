@@ -1,0 +1,4 @@
+rootProject.name = 'dockerizor-examples'
+
+include 'jax-rs'
+include 'jax-rs-image'

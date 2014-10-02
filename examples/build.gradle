@@ -1,0 +1,74 @@
+ext.javaProjects = [project(':jax-rs')]
+ext.virgoProjects = [project(':jax-rs-image')]
+
+buildscript {
+	repositories {
+		mavenLocal()
+		jcenter()
+	}
+	dependencies {
+		classpath 'se.transmode.gradle:gradle-docker:1.4+'
+		classpath 'com.eclipsesource:dockerizor:0.1+'
+	}
+}
+
+configure(javaProjects + virgoProjects) {
+	apply plugin: "java"
+	apply plugin: 'eclipse'
+
+	compileJava {
+		sourceCompatibility = '1.7'
+		targetCompatibility = '1.7'
+	}
+
+	eclipse {
+		jdt {
+			sourceCompatibility = '1.7'
+			targetCompatibility = '1.7'
+		}
+	}
+
+	ext {
+		springframeworkVersion = '3.2.4.RELEASE' // EBR doesn't contain all 3.2.5 artifacts :(
+		aspectjWeaverVersion = '1.7.2.RELEASE'
+		cglibVersion = '2.2'
+
+		rapVersion = '2.3.0'
+	}
+
+	repositories {
+		mavenLocal()
+		mavenCentral()
+		maven { url "http://repository.springsource.com/maven/bundles/external" }
+		maven { url "http://repository.springsource.com/maven/bundles/release" }
+	}
+}
+
+configure(virgoProjects) {
+	apply plugin: 'docker'
+
+	docker {
+		baseImage = 'ubuntu:14.04'
+		maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
+
+		useApi true
+		hostUrl 'http://localhost:4243'
+		version 'latest'
+	}
+}
+
+configure(project(':jax-rs')) {
+	dependencies {
+		compile 'com.eclipsesource.jaxrs:jersey-all:2.10.1'
+	}
+}
+
+configure(project(':jax-rs-image')) {
+	dependencies {
+		runtime project(':jax-rs')
+		runtime 'com.eclipsesource.jaxrs:publisher:4.1'
+		runtime 'com.eclipsesource.jaxrs:provider-gson:2.0'
+	}
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '2.0' }
