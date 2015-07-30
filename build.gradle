@@ -19,3 +19,4 @@ version = '0.1-SNAPSHOT'
 
 apply from: file('gradle/publish.gradle')
 
+task wrapper(type: Wrapper) { gradleVersion = '2.5' }
