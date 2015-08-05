@@ -6,5 +6,6 @@ dockerizor {
 	removeSplash = true
 
 	virgoVersion = 'latest'
+	embeddedSpringVersion = '3.2.10.RELEASE'
 	imageName = 'virgo-jetty-server'
 }

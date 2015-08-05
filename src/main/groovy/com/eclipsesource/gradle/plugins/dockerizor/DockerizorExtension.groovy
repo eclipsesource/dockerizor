@@ -25,28 +25,41 @@ class DockerizorExtension {
 		closure(task)
 	}
 
+	String getShortName() {
+		switch (virgoFlavour) {
+			case 'VJS':
+				return "jetty-server"
+			case 'VTS':
+				return "tomcat-server"
+			case 'VRS':
+				return "nano"
+			default:
+				throw new IllegalArgumentException("Virgo flavour ${virgoFlavour} *not* supported")
+		}
+	}
+
 	String getArchiveName() {
 		switch (virgoFlavour) {
 			case 'VJS':
 				switch (virgoVersion) {
 					case 'latest':
-					return "virgo-jetty-server-3.7.0.CI-latest"
+						return "virgo-jetty-server-latest"
 					default:
-					return "virgo-jetty-server-${virgoVersion}.zip"
+						return "virgo-jetty-server-${virgoVersion}.zip"
 				}
 			case 'VTS':
 				switch (virgoVersion) {
 					case 'latest':
-					return "virgo-tomcat-server-3.7.0.CI-latest"
+						return "virgo-tomcat-server-latest"
 					default:
-					return "virgo-tomcat-server-${virgoVersion}.zip"
+						return "virgo-tomcat-server-${virgoVersion}.zip"
 				}
 			case 'VRS':
 				switch (virgoVersion) {
 					case 'latest':
-					return "virgo-nano-rap-3.7.0.CI-latest"
+						return "virgo-nano-rap-latest"
 					default:
-					throw new IllegalArgumentException("Virgo flavour ${virgoFlavour}/${virgoVersion} *not* supported")
+						throw new IllegalArgumentException("Virgo flavour ${virgoFlavour}/${virgoVersion} *not* supported")
 				}
 			default:
 				throw new IllegalArgumentException("Virgo flavour ${virgoFlavour} *not* supported")
@@ -59,18 +72,18 @@ class DockerizorExtension {
 			case 'VTS':
 				switch (virgoVersion) {
 					case 'latest':
-					println "Using latest successful build for ${virgoFlavour}/3.7.0.CI."
-					return "https://hudson.eclipse.org/virgo/view/Ripplor%20Repositories/job/virgo.packaging.snapshot/lastSuccessfulBuild/artifact/build-packaging/target/artifacts/${archiveName}.zip"
+						println "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
+						return "https://hudson.eclipse.org/virgo/job/gradle-build/lastSuccessfulBuild/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
 					default:
-					return "http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/${virgoVersion}/${archiveName}&mirror_id=580&r=1"
+						return "http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/${virgoVersion}/${archiveName}&mirror_id=580&r=1"
 				}
 			case 'VRS':
 				switch (virgoVersion) {
 					case 'latest':
-					println "Using latest successful build for ${virgoFlavour}/3.7.0.CI."
-					return "https://hudson.eclipse.org/virgo/view/Ripplor%20Repositories/job/virgo.packaging.snapshot/lastSuccessfulBuild/artifact/build-packaging/target/artifacts/${archiveName}.zip"
+						println "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
+						return "https://hudson.eclipse.org/virgo/job/gradle-build/lastSuccessfulBuild/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
 					default:
-					throw new IllegalArgumentException("Virgo flavour ${virgoFlavour}/${virgoVersion} *not* supported")
+						throw new IllegalArgumentException("Virgo flavour ${virgoFlavour}/${virgoVersion} *not* supported")
 				}
 			default:
 				throw new IllegalArgumentException("Virgo flavour ${virgoFlavour} *not* supported")

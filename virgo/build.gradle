@@ -10,7 +10,7 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'se.transmode.gradle:gradle-docker:1.4+'
+		classpath 'se.transmode.gradle:gradle-docker:1.2'
 		classpath 'com.eclipsesource:dockerizor:0.1+'
 	}
 }
