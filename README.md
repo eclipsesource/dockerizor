@@ -14,7 +14,7 @@ In a first step we automated the generation of basic Virgo images.
 
 ### Building basic Virgo images
 
-In your build script you specify Docker related configuration via the 'gradle-docker'[gradle-docker] [] Plugin.
+In your build script you specify Docker related configuration via the ['gradle-docker'][gradle-docker] Plugin.
 
 	apply plugin: 'docker'
 	docker {
