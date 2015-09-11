@@ -5,7 +5,7 @@ dockerizor {
 	removeAdminConsole = true
 	removeSplash = true
 
-	virgoVersion = 'latest'
-	embeddedSpringVersion = '3.2.10.RELEASE'
+    virgoVersion = '3.6.4.RELEASE'
+    embeddedSpringVersion = '3.1.0.RELEASE'
 	imageName = 'virgo-tomcat-server'
 }

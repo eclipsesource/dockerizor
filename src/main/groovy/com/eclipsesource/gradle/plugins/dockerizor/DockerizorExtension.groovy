@@ -3,7 +3,7 @@ package com.eclipsesource.gradle.plugins.dockerizor
 import se.transmode.gradle.plugins.docker.DockerTask
 
 class DockerizorExtension {
-	String javaVersion
+    String javaImage
 	String virgoVersion
 	String virgoFlavour
 	String virgoHome

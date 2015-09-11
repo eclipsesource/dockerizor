@@ -8,8 +8,8 @@ class Dockerizor implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create("dockerizor", DockerizorExtension)
         project.dockerizor.with {
-            javaVersion = '1.7'
-            virgoVersion = '3.6.3.RELEASE'
+            javaImage = 'java:openjdk-7u79-jre'
+            virgoVersion = '3.6.4.RELEASE'
             virgoFlavour = 'VTS'
             virgoHome = '/home/virgo'
             removeAdminConsole = true
@@ -26,35 +26,15 @@ class Dockerizor implements Plugin<Project> {
 
             doFirst {
                 applicationName = project.dockerizor.imageName
-                switch ( project.dockerizor.javaVersion ) {
-                    case "1.7":
-                        runCommand "sed 's/main\$/main universe/' -i /etc/apt/sources.list"
-                        runCommand "apt-get update && apt-get install -y software-properties-common python-software-properties"
-                        runCommand "add-apt-repository ppa:webupd8team/java -y"
-                        runCommand "apt-get update"
-                        runCommand "echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections"
-                        runCommand "apt-get install -y oracle-java7-installer"
-                        runCommand "apt-get clean"
-                        break
-                    case "1.8":
-                        runCommand "sed 's/main\$/main universe/' -i /etc/apt/sources.list"
-                        runCommand "apt-get update && apt-get install -y software-properties-common python-software-properties"
-                        runCommand "add-apt-repository ppa:webupd8team/java -y"
-                        runCommand "apt-get update"
-                        runCommand "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections"
-                        runCommand "apt-get install -y oracle-java8-installer"
-                        runCommand "apt-get clean"
-                        break
-                    default:
-                        throw new IllegalArgumentException("Java version ${javaVersion} *not* supported")
-                }
-
-                println "Building image from ${project.docker.baseImage}..."
+                project.docker.baseImage = project.dockerizor.javaImage
+                tagVersion = project.dockerizor.virgoVersion
+                println "Building image from ${project.docker.baseImage} with tag ${tagVersion}..."
                 println "Adding Virgo Container (${project.dockerizor.virgoFlavour}) in version ${project.dockerizor.virgoVersion}..."
                 def virgoHome = project.dockerizor.virgoHome
                 println "Installing Virgo into ${virgoHome}."
-                runCommand ('useradd -m virgo')
+                runCommand ("apt-get update")
                 runCommand ("apt-get install -y curl bsdtar")
+                runCommand ('useradd -m virgo')
                 runCommand ("curl -L '${project.dockerizor.downloadUrl}' | bsdtar --strip-components 1 -C ${virgoHome} -xzf -")
 
                 if(project.dockerizor.removeAdminConsole) {
@@ -72,7 +52,9 @@ class Dockerizor implements Plugin<Project> {
                     switch (project.dockerizor.virgoFlavour) {
                         case 'VJS':
                         case 'VTS':
-                            runCommand "rm ${virgoHome}/pickup/org.eclipse.virgo.apps.splash_*.jar"
+                            runCommand "rm -f ${virgoHome}/pickup/org.eclipse.virgo.apps.splash_*.jar"
+                            // splash bundle is differently named in VJS in 3.6.x stream
+                            runCommand "rm -f ${virgoHome}/pickup/org.eclipse.virgo.apps.splash-*.jar"
                             // only available in VTS
                             runCommand "rm -f ${virgoHome}/pickup/org.eclipse.virgo.apps.repository_*.par"
                             break
@@ -101,7 +83,7 @@ class Dockerizor implements Plugin<Project> {
                 switch (project.dockerizor.embeddedSpringVersion) {
                     // TODO - automagically add or check if Spring is available in runtime dependencies
                     case '3.1.0.RELEASE':
-                        if (project.dockerizor.virgoVersion == '3.6.3.RELEASE') {
+                        if (project.dockerizor.virgoVersion == '3.6.4.RELEASE') {
                             println "Skipping request to add default Spring version."
                             break
                         }

@@ -15,7 +15,7 @@ dependencies {
 }
 
 group = 'com.eclipsesource'
-version = '0.1-SNAPSHOT'
+version = '0.2.0.BUILD-SNAPSHOT'
 
 apply from: file('gradle/publish.gradle')
 
