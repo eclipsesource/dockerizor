@@ -81,4 +81,4 @@ configure(virgoProjects) {
 	}
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.5' }
+task wrapper(type: Wrapper) { gradleVersion = '2.6' }
