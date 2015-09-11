@@ -1,12 +1,12 @@
 ## Dockerize an OSGi JAX-RS Connector Example
 
-This example demonstrates how to build Docker images for Virgo powered applications with [Dockerizor][Dockerizor].
+This example demonstrates how to build Docker images for [Virgo][Virgo] from [EclipseRT][EclipseRT] powered applications with [Dockerizor][Dockerizor].
 
 The code is based on the DS example from the [OSGi - JAX-RS Connector][jax-rs-connector] project.
 
 ### Build the Docker Image
 
-Please note: The following step requires that you have a Docker daemon running locally on port 4243.
+Please note: The following step acts on the assumption that you have a Docker daemon running locally on port 4243.
 
     $ ./gradlew build dockerize
 
@@ -37,8 +37,6 @@ http://localhost:9090/services/product/1
 The Virgo admin console is available at the default HTTP port of Virgo:
 
 http://localhost:8080/admin
-
-### Customizing the Docker Image
 
   [Virgo]: http://eclipse.org/virgo
   [EclipseRT]: http://eclipse.org/rt
