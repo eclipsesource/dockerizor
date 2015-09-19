@@ -1,5 +1,5 @@
-ext.javaProjects = [project(':jax-rs')]
-ext.virgoProjects = [project(':jax-rs-image')]
+ext.virgoProjects = [project(':jax-rs')]
+ext.dockerProjects = [project(':jax-rs-image')]
 
 buildscript {
 	repositories {
@@ -11,7 +11,7 @@ buildscript {
 	}
 }
 
-configure(javaProjects + virgoProjects) {
+configure(virgoProjects + dockerProjects) {
 	apply plugin: "java"
 	apply plugin: 'eclipse'
 
@@ -40,18 +40,6 @@ configure(javaProjects + virgoProjects) {
 		mavenCentral()
 		maven { url "http://repository.springsource.com/maven/bundles/external" }
 		maven { url "http://repository.springsource.com/maven/bundles/release" }
-	}
-}
-
-configure(virgoProjects) {
-	apply plugin: 'docker'
-
-	docker {
-		maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
-
-		useApi true
-		hostUrl 'http://localhost:4243'
-		version 'latest'
 	}
 }
 

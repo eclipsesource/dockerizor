@@ -2,7 +2,6 @@ package com.eclipsesource.gradle.plugins.dockerizor
 import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Test
-import se.transmode.gradle.plugins.docker.DockerTask
 
 import static org.junit.Assert.assertThat
 import static org.junit.Assert.assertTrue
@@ -22,7 +21,7 @@ class DockerizorTest {
 		Project project = ProjectBuilder.builder().build()
 		project.apply plugin: 'dockerizor'
 
-		assertTrue(project.tasks.dockerize instanceof DockerTask)
+		assertTrue(project.tasks.dockerize instanceof DockerizorTask)
 	}
 	
 }

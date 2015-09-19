@@ -1,84 +1,85 @@
 ext.virgoProjects = [
-	project(':vts'),
-	project(':vjs'),
-	project(':vrs')
+    project(':vts'),
+    project(':vjs'),
+    project(':vrs')
 ]
 
 buildscript {
-	repositories {
-		mavenLocal()
-		jcenter()
-	}
-	dependencies {
-		classpath 'com.eclipsesource:dockerizor:0.2.0.BUILD-SNAPSHOT'
-	}
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies { classpath 'com.eclipsesource:dockerizor:0.2.0.BUILD-SNAPSHOT' }
 }
 
 configure(virgoProjects) {
-	apply plugin: "java"
-	apply plugin: 'eclipse'
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
 
-	compileJava {
-		sourceCompatibility = '1.7'
-		targetCompatibility = '1.7'
-	}
+    compileJava {
+        sourceCompatibility = '1.7'
+        targetCompatibility = '1.7'
+    }
 
-	eclipse {
-		jdt {
-			sourceCompatibility = '1.7'
-			targetCompatibility = '1.7'
-		}
-	}
+    eclipse {
+        jdt {
+            sourceCompatibility = '1.7'
+            targetCompatibility = '1.7'
+        }
+    }
 
-	ext {
-		springframeworkVersion = '3.2.4.RELEASE' // EBR doesn't contain all 3.2.5 artifacts :(
-		aspectjWeaverVersion = '1.7.2.RELEASE'
-		cglibVersion = '2.2'
+    ext {
+        springframeworkVersion = '3.2.4.RELEASE' // EBR doesn't contain all 3.2.5 artifacts :(
+        aspectjWeaverVersion = '1.7.2.RELEASE'
+        cglibVersion = '2.2'
 
-		rapVersion = '2.3.0'
-	}
+        rapVersion = '2.3.0'
+    }
 
-	repositories {
-		mavenLocal()
-		mavenCentral()
-		maven { url "http://repository.springsource.com/maven/bundles/external" }
-		maven { url "http://repository.springsource.com/maven/bundles/release" }
-	}
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "http://repository.springsource.com/maven/bundles/external" }
+        maven { url "http://repository.springsource.com/maven/bundles/release" }
+    }
 }
 
 configure(virgoProjects) {
-	apply plugin: 'docker'
+    apply plugin: 'dockerizor'
 
-	docker {
-		maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
+    dockerizor {
+        maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
+        tag = '3.6.4.RELEASE'
 
-		useApi true
-		hostUrl 'http://localhost:4243'
-		version 'latest'
-	}
+        removeAdminConsole = true
+        removeSplash = true
+
+        virgoVersion = '3.6.4.RELEASE'
+        embeddedSpringVersion = '3.1.0.RELEASE'
+    }
 }
 
 configure(virgoProjects) {
-	dependencies {
-		// only needed when using 3.2.4 in Virgo container
-		runtime "org.aspectj:com.springsource.org.aspectj.weaver:${aspectjWeaverVersion}"
+    dependencies {
+        // only needed when using 3.2.4 in Virgo container
+        runtime "org.aspectj:com.springsource.org.aspectj.weaver:${aspectjWeaverVersion}"
 
-		runtime "org.springframework:org.springframework.aop:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.aspects:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.beans:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.context:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.context.support:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.core:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.expression:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.jdbc:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.jms:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.orm:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.oxm:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.transaction:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.web:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.web.servlet:${springframeworkVersion}"
-		runtime "org.springframework:org.springframework.web.portlet:${springframeworkVersion}"
-	}
+        runtime "org.springframework:org.springframework.aop:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.aspects:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.beans:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.context:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.context.support:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.core:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.expression:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.jdbc:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.jms:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.orm:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.oxm:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.transaction:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.web:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.web.servlet:${springframeworkVersion}"
+        runtime "org.springframework:org.springframework.web.portlet:${springframeworkVersion}"
+    }
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '2.6' }

@@ -1,11 +1,8 @@
 apply plugin: 'dockerizor'
 
 dockerizor {
-	virgoFlavour = 'VTS'
-	removeAdminConsole = true
-	removeSplash = true
+    description = 'Virgo Server for Apache Tomcat'
+    repository = "eclipsesource/virgo-tomcat-server"
 
-    virgoVersion = '3.6.4.RELEASE'
-    embeddedSpringVersion = '3.1.0.RELEASE'
-	imageName = 'virgo-tomcat-server'
+	virgoFlavour = 'VTS'
 }

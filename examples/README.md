@@ -10,13 +10,13 @@ Please note: The following step acts on the assumption that you have a Docker da
 
     $ ./gradlew build dockerize
 
-This will create the Docker image ``dockerizor-examples/jax-rs-example``.
+This will create the Docker image ``dockerizor-example/jax-rs``.
 
 ### Running the Container
 
 To start the previously dockerized application  
 
-    docker run -d --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-examples/jax-rs-example
+    docker run -d --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-example/jax-rs
 
 The command runs the ``jax-rs-example`` and publishes the ports ``8080`` and ``9090``.
 
