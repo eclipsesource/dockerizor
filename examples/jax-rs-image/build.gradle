@@ -5,44 +5,44 @@ apply plugin: 'dockerizor'
 dockerizor {
     repository = "dockerizor-example/jax-rs"
 
-	virgoFlavour = 'VJS'
-	removeAdminConsole = false
-	removeSplash = false
+    javaImage = 'java:openjdk-7u79-jre'
 
-	pickupFiles = ['jax-rs-example.plan']
+    virgoFlavour = 'VJS'
+    removeAdminConsole = false
+    removeSplash = false
 
-	closure = { task ->
-		println "Adding JavaSE-1.7 to configuration/java6-server.profile"
-		task.RUN "sed -i 's/JavaSE-1.6/JavaSE-1.6,\\\\\\n JavaSE-1.7/' ${project.dockerizor.virgoHome}/configuration/java6-server.profile"
-		println "Changing org.osgi.service.http.port=8080 to 9090"
-		task.RUN "sed -i 's/8080/9090/' ${project.dockerizor.virgoHome}/configuration/config.ini"
+    pickupFiles = ['jax-rs-example.plan']
+
+    closure = { task ->
+        println "Adding JavaSE-1.7 to configuration/java6-server.profile"
+        task.RUN "sed -i 's/JavaSE-1.6/JavaSE-1.6,\\\\\\n JavaSE-1.7/' ${project.dockerizor.virgoHome}/configuration/java6-server.profile"
+        println "Changing org.osgi.service.http.port=8080 to 9090"
+        task.RUN "sed -i 's/8080/9090/' ${project.dockerizor.virgoHome}/configuration/config.ini"
         task.EXPOSE 9090
         task.EXPOSE 8080
 
-		println "Adding OSGi dependencies not available via standard dependency mechanism:"
-		println "Download oee.http.jetty/oee.http.servlet from eclipse archive"
-		// http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200/org.eclipse.equinox.http.jetty_3.0.1.v20121109-203239.jar
-		// http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200/org.eclipse.equinox.http.servlet_1.1.300.v20120912-130548.jar
-		String eclipseArchiveUrl = 'http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200'
-		String httpJetty = 'org.eclipse.equinox.http.jetty_3.0.1.v20121109-203239.jar'
-		String httpServlet = 'org.eclipse.equinox.http.servlet_1.1.300.v20120912-130548.jar'
-		task.RUN ("curl -L -o ${virgoHome}/repository/ext/${httpJetty} ${eclipseArchiveUrl}/${httpJetty}")
-		task.RUN ("curl -L -o ${virgoHome}/repository/ext/${httpServlet} ${eclipseArchiveUrl}/${httpServlet}")
+        println "Adding OSGi dependencies not available via standard dependency mechanism:"
+        println "Download oee.http.jetty/oee.http.servlet from eclipse archive"
+        // http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200/org.eclipse.equinox.http.jetty_3.0.1.v20121109-203239.jar
+        // http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200/org.eclipse.equinox.http.servlet_1.1.300.v20120912-130548.jar
+        String eclipseArchiveUrl = 'http://archive.eclipse.org/equinox/drops/R-3.8.2-201302041200'
+        String httpJetty = 'org.eclipse.equinox.http.jetty_3.0.1.v20121109-203239.jar'
+        String httpServlet = 'org.eclipse.equinox.http.servlet_1.1.300.v20120912-130548.jar'
+        task.RUN ("curl -L -o ${virgoHome}/repository/ext/${httpJetty} ${eclipseArchiveUrl}/${httpJetty}")
+        task.RUN ("curl -L -o ${virgoHome}/repository/ext/${httpServlet} ${eclipseArchiveUrl}/${httpServlet}")
 
-		println "Download gson from eclipse orbit"
-		// http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/plugins/com.google.gson_2.1.0.v201303041604.jar
-		String orbitBaseUrl = 'http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/plugins'
-		String gson = 'com.google.gson_2.1.0.v201303041604.jar'
-		task.RUN ("curl -L -o ${virgoHome}/repository/ext/${gson} ${orbitBaseUrl}/${gson}")
+        println "Download gson from eclipse orbit"
+        // http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/plugins/com.google.gson_2.1.0.v201303041604.jar
+        String orbitBaseUrl = 'http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/plugins'
+        String gson = 'com.google.gson_2.1.0.v201303041604.jar'
+        task.RUN ("curl -L -o ${virgoHome}/repository/ext/${gson} ${orbitBaseUrl}/${gson}")
 
-		println "Adding runtime dependencies"
-		project.configurations.runtime.each {
-			println 'Adding dependency: ' + it
-			task.ADD (it, "${virgoHome}/repository/usr/")
-		}
-	}
+        println "Adding runtime dependencies"
+        project.configurations.runtime.each {
+            println 'Adding dependency: ' + it
+            task.ADD (it, "${virgoHome}/repository/usr/")
+        }
+    }
 
-	dockerize.doLast() {
-		println "Successful dockerized '${project.name}'."
-	}
+    dockerize.doLast() { println "Successful dockerized '${project.name}'." }
 }
