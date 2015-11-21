@@ -19,4 +19,4 @@ version = '0.2.0.BUILD-SNAPSHOT'
 
 apply from: file('gradle/publish.gradle')
 
-task wrapper(type: Wrapper) { gradleVersion = '2.6' }
+task wrapper(type: Wrapper) { gradleVersion = '2.9' }
