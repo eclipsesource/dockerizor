@@ -20,6 +20,7 @@ class Dockerizor implements Plugin<Project> {
 
             javaImage = 'java:openjdk-6b36-jre'
             virgoVersion = '3.6.4.RELEASE'
+            hudsonJobName = 'gradle-build'
             virgoFlavour = 'VTS'
             virgoHome = '/home/virgo'
             removeAdminConsole = true
