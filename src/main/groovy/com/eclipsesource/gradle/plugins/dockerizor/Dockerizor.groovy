@@ -160,7 +160,7 @@ class Dockerizor implements Plugin<Project> {
                 logger.info "done"
 
                 RUN ("chmod u+x ${virgoHome}/bin/*.sh")
-                ENTRYPOINT ("${virgoHome}/bin/startup.sh")
+                CMD ("${virgoHome}/bin/startup.sh")
 
                 logger.debug "Running custom post processer:"
                 project.dockerizor.postProcessor(project.dockerize)

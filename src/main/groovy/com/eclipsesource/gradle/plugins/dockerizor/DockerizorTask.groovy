@@ -99,6 +99,10 @@ class DockerizorTask extends DefaultTask {
         dockerfile.addCommand("ENTRYPOINT [\"${command}\"]")
     }
 
+    void 'CMD' (String command) {
+        dockerfile.addCommand("CMD [\"${command}\"]")
+    }
+    
     void 'USER' (String user) {
         logger.info "Switching to USER ${user}"
         dockerfile.addCommand("USER ${user}")
