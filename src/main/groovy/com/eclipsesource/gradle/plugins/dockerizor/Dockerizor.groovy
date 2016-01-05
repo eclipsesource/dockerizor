@@ -49,7 +49,6 @@ class Dockerizor implements Plugin<Project> {
                 RUN ("apt-get update")
                 RUN ("apt-get install -y curl bsdtar")
                 RUN ("useradd -m virgo")
-                USER ("virgo")
                 RUN ("curl -L '${project.dockerizor.downloadUrl}' | bsdtar --strip-components 1 -C ${virgoHome} -xzf -")
 
                 if(project.dockerizor.removeAdminConsole) {
@@ -161,6 +160,10 @@ class Dockerizor implements Plugin<Project> {
                 logger.info "done"
 
                 RUN ("chmod u+x ${virgoHome}/bin/*.sh")
+
+                RUN ("chown -R virgo:virgo ${virgoHome}")
+                USER ("virgo")
+
                 CMD ("${virgoHome}/bin/startup.sh")
 
                 logger.debug "Running custom post processer:"
