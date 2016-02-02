@@ -7,7 +7,7 @@ buildscript {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.eclipsesource:dockerizor:0.2.0.BUILD-SNAPSHOT'
+		classpath 'com.eclipsesource.dockerizor:dockerizor:0.3.0.BUILD-SNAPSHOT'
 	}
 }
 
@@ -46,14 +46,6 @@ configure(virgoProjects + dockerProjects) {
 configure(project(':jax-rs')) {
 	dependencies {
 		compile 'com.eclipsesource.jaxrs:jersey-all:2.10.1'
-	}
-}
-
-configure(project(':jax-rs-image')) {
-	dependencies {
-		runtime project(':jax-rs')
-		runtime 'com.eclipsesource.jaxrs:publisher:4.1'
-		runtime 'com.eclipsesource.jaxrs:provider-gson:2.0'
 	}
 }
 
