@@ -80,7 +80,7 @@ class DockerizorExtension {
             case 'VTS':
                 switch (virgoVersion) {
                     case 'latest':
-                    println "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
+                    logger.info "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
                     return "https://hudson.eclipse.org/virgo/job/${hudsonJobName}/lastSuccessfulBuild/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
                     default:
                     return "http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/${virgoVersion}/${archiveName}&mirror_id=580&r=1"
@@ -88,7 +88,7 @@ class DockerizorExtension {
             case 'VRS':
                 switch (virgoVersion) {
                     case 'latest':
-                    println "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
+                    logger.info "Using latest successful build for ${virgoFlavour}/3.7.0-SNAPSHOT."
                     return "https://hudson.eclipse.org/virgo/job/${hudsonJobName}/lastSuccessfulBuild/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
                     default:
                     throw new IllegalArgumentException("Virgo flavour ${virgoFlavour}/${virgoVersion} *not* supported")

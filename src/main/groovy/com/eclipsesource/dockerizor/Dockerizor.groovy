@@ -62,7 +62,7 @@ class Dockerizor implements Plugin<Project> {
                             RUN "rm ${virgoHome}/pickup/org.eclipse.virgo.management.console_*.jar"
                             break
                         default:
-                            println "Ignoring request to remove admin console from ${project.dockerizor.virgoFlavour}."
+                            logger.warn "Ignoring request to remove admin console from ${project.dockerizor.virgoFlavour}."
                     }
                 }
 
@@ -77,7 +77,7 @@ class Dockerizor implements Plugin<Project> {
                             RUN "rm -f ${virgoHome}/pickup/org.eclipse.virgo.apps.repository_*.par"
                             break
                         default:
-                            println "Ignoring request to remove splash from ${project.dockerizor.virgoFlavour}."
+                            logger.warn "Ignoring request to remove splash from ${project.dockerizor.virgoFlavour}."
                     }
                 }
 
