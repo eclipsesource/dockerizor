@@ -135,7 +135,7 @@ class Dockerizor implements Plugin<Project> {
                 logger.info "Provisioning Virgo endorsed:"
                 project.configurations.endorsed.each {
                     logger.debug "Adding dependency to endorsed: " + it
-                    ADD (it, "${virgoHome}/endorsed/")
+                    ADD (it, "${virgoHome}/lib/endorsed/")
                 }
                 logger.info "done"
 
