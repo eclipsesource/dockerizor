@@ -150,7 +150,7 @@ class Dockerizor implements Plugin<Project> {
                 }
                 logger.info "done"
 
-                logger.info "Running custom post processer:"
+                logger.info "Running custom post processor:"
                 project.dockerizor.postProcessor(project.dockerize)
                 logger.info "done"
             }
