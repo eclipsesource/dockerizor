@@ -1,4 +1,4 @@
-package com.eclipsesource.gradle.plugins.dockerizor
+package com.eclipsesource.dockerizor
 import static org.junit.Assert.assertEquals
 import static org.junit.Assert.assertThat
 import static org.junit.Assert.assertTrue
@@ -19,7 +19,7 @@ class DockerizorTaskTest {
     @Before
     void setup() {
         project = ProjectBuilder.builder().build()
-        project.apply plugin: 'dockerizor'
+        project.apply plugin: 'com.eclipsesource.dockerizor'
         task = project.tasks['dockerize']
         project.dockerizor.dryRun = true
         dockerfile = new File(task.outputDir, "Dockerfile")

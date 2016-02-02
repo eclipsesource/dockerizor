@@ -1,21 +1,43 @@
+buildscript {
+    repositories {
+        // Maven home of the plugin-publish-plugin
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies { classpath "com.gradle.publish:plugin-publish-plugin:0.9.3" }
+}
+
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: "com.gradle.plugin-publish"
 
 repositories {
-    mavenLocal()
-	mavenCentral()
-	jcenter()
+    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-	compile gradleApi()
-	compile localGroovy()
+    compile gradleApi()
+    compile localGroovy()
 
     compile 'com.github.docker-java:docker-java:2.1.4'
 }
 
-group = 'com.eclipsesource'
-version = '0.2.0.BUILD-SNAPSHOT'
+group = 'com.eclipsesource.dockerizor'
+version = '0.2'
+
+pluginBundle {
+    website = 'https://github.com/eclipsesource/dockerizor'
+    vcsUrl = 'https://github.com/eclipsesource/dockerizor'
+    description = 'Gradle plug-in to create a Docker image that includes an Eclipse Virgo container'
+    tags = ['virgo', 'docker']
+
+    plugins {
+        greetingsPlugin {
+            id = 'com.eclipsesource.dockerizor'
+            displayName = 'Gradle dockerizor plugin'
+        }
+    }
+}
 
 apply from: file('gradle/publish.gradle')
 

@@ -1,4 +1,4 @@
-package com.eclipsesource.gradle.plugins.dockerizor
+package com.eclipsesource.dockerizor
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -32,6 +32,10 @@ class Dockerizor implements Plugin<Project> {
 
             closure = {  println "Running empty post processor" }
         }
+
+        project.configurations { endorsed { transitive = false } }
+        project.configurations { repositoryExt { transitive = false } }
+        project.configurations { repositoryUsr { transitive = false } }
 
         project.task('dockerize', type: DockerizorTask) {
             group = 'docker'

@@ -1,4 +1,4 @@
-package com.eclipsesource.gradle.plugins.dockerizor
+package com.eclipsesource.dockerizor
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.logging.Logger

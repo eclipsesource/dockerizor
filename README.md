@@ -16,31 +16,34 @@ In a first step we automated the generation of basic Virgo images.
 
 In your build script you specify Docker related configuration via the [''gradle-docker''][gradle-docker] Plugin.
 
-	apply plugin: 'docker'
-	docker {
-		maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
+    ::::groovy
+    apply plugin: 'docker'
+    docker {
+      maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
 
-		version = 'latest'
+      version = 'latest'
 
-		useApi true
-		hostUrl 'http://localhost:4243'
-	}
+      useApi true
+      hostUrl 'http://localhost:4243'
+    }
 
 In addition to this you can specify the Virgo specific configuration via the ''dockerizor'' Plugin:
 
+    ::::groovy
     apply plugin: 'dockerizor'
     
     dockerizor {
-        virgoFlavour = 'VJS'
-        removeAdminConsole = true
-        removeSplash = true
+      virgoFlavour = 'VJS'
+      removeAdminConsole = true
+      removeSplash = true
 
-        imageName = 'virgo-jetty-server'
+      imageName = 'virgo-jetty-server'
     }
 
 The snippet above will create a Docker image named 'virgo-jetty-server' with the Virgo flavor VJS (Virgo Jetty Server).
 
-	$ docker images | grep virgo-jetty-server
+    ::::sh
+    $ docker images | grep virgo-jetty-server
 
 The generated basic images for Virgo are available via [Docker Hub][dockerhub]:
 

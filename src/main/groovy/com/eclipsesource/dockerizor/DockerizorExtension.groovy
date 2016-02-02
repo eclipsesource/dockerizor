@@ -1,4 +1,4 @@
-package com.eclipsesource.gradle.plugins.dockerizor
+package com.eclipsesource.dockerizor
 
 class DockerizorExtension {
 
