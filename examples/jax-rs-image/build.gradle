@@ -1,5 +1,6 @@
 import com.eclipsesource.gradle.plugins.dockerizor.DockerizorTask
 
+apply plugin: 'base'
 apply plugin: 'dockerizor'
 
 dockerizor {
