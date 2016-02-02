@@ -6,8 +6,9 @@ The code is based on the DS example from the [OSGi - JAX-RS Connector][jax-rs-co
 
 ### Build the Docker Image
 
-Please note: The following step acts on the assumption that you have a Docker daemon running locally on port 4243.
+Please note: The following step acts on the assumption that you have a Docker daemon running locally on port ``4243``.
 
+    ::::sh
     $ ./gradlew build dockerize
 
 This will create the Docker image ``dockerizor-example/jax-rs``.
@@ -16,27 +17,30 @@ This will create the Docker image ``dockerizor-example/jax-rs``.
 
 To start the previously dockerized application  
 
-    docker run -d --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-example/jax-rs
+    ::::sh
+    $ docker run -d --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-example/jax-rs
 
 The command runs the ``jax-rs-example`` and publishes the ports ``8080`` and ``9090``.
 
 ### Accessing the JAX-RS Application
 
-The example exposes the OSGi HttpService on port 9090 with the rest service:
+The example exposes the OSGi HttpService on port ``9090`` with the rest service:
 
-http://localhost:9090/services/osgi-jax-rs/
+[http://localhost:9090/services/osgi-jax-rs/](http://localhost:9090/services/osgi-jax-rs/)
 
+    ::::text
     JAX-RS and OSGi are a lovely couple.
 
-http://localhost:9090/services/product/1
+[http://localhost:9090/services/product/1](http://localhost:9090/services/product/1)
 
+    ::::text
     Product name: Pencil
     Product Description :
     Simple writing instrument    
 
 The Virgo admin console is available at the default HTTP port of Virgo:
 
-http://localhost:8080/admin
+[http://localhost:8080/admin](http://localhost:8080/admin)
 
   [Virgo]: http://eclipse.org/virgo
   [EclipseRT]: http://eclipse.org/rt
