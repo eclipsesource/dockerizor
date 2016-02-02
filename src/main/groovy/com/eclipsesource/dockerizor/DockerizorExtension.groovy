@@ -26,11 +26,11 @@ class DockerizorExtension {
     String[] binFiles
     String embeddedSpringVersion
 
-    Closure closure = {
+    Closure postDockerizeHook = {
     }
 
     def postProcessor(DockerizorTask task) {
-        closure(task)
+        postDockerizeHook(task)
     }
 
     String getShortName() {
