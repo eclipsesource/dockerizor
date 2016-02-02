@@ -57,4 +57,4 @@ configure(project(':jax-rs-image')) {
 	}
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.6' }
+task wrapper(type: Wrapper) { gradleVersion = '2.10' }
