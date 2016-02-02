@@ -127,11 +127,6 @@ class Dockerizor implements Plugin<Project> {
 
                 RUN ("chmod u+x ${virgoHome}/bin/*.sh")
 
-                RUN ("chown -R virgo:virgo ${virgoHome}")
-                USER ("virgo")
-
-                CMD ("${virgoHome}/bin/startup.sh")
-
                 logger.info "Provisioning Virgo endorsed:"
                 project.configurations.endorsed.each {
                     logger.debug "Adding dependency to endorsed: " + it
@@ -153,6 +148,11 @@ class Dockerizor implements Plugin<Project> {
                 logger.info "Running custom post processor:"
                 project.dockerizor.postProcessor(project.dockerize)
                 logger.info "done"
+
+                RUN ("chown -R virgo:virgo ${virgoHome}")
+                USER ("virgo")
+
+                CMD ("${virgoHome}/bin/startup.sh")
             }
             doLast() { logger.info "Successful dockerized '${project.dockerizor.repository}'." }
         }
