@@ -53,6 +53,7 @@ class Dockerizor implements Plugin<Project> {
                 RUN ("apt-get update")
                 RUN ("apt-get install -y curl bsdtar")
                 RUN ("useradd -m virgo")
+                logger.info "Using Virgo download URL: '${project.dockerizor.downloadUrl}'"
                 RUN ("curl -L '${project.dockerizor.downloadUrl}' | bsdtar --strip-components 1 -C ${virgoHome} -xzf -")
 
                 if(project.dockerizor.removeAdminConsole) {
