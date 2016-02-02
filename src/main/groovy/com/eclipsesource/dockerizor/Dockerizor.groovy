@@ -8,7 +8,7 @@ class Dockerizor implements Plugin<Project> {
         project.extensions.create("dockerizor", DockerizorExtension)
         project.dockerizor.with {
             // docker image
-            maintainer = '<unconfigure maintainer>'
+            maintainer = '<unconfigured maintainer>'
             description = '<no description>'
 
             // docker client configuration
