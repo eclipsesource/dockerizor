@@ -13,7 +13,12 @@ class Dockerfile {
         this.dockerfile = dockerfile
         boolean success = dockerfile.createNewFile()
         if (!success) {
-            throw new GradleException("Failed to create Dockerfile")
+            // try to delete and recreate (existing) Dockerfile
+            dockerfile.delete()
+            success = dockerfile.createNewFile()
+        }
+        if (!success) {
+            throw new GradleException("Dockerizor Plugin Error: Failed to create Dockerfile: '" + this.dockerfile + "'.")
         }
     }
 
