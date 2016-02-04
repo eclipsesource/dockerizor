@@ -3,16 +3,16 @@ ext.dockerProjects = [project(':jax-rs-image')]
 
 buildscript {
 	repositories {
-		mavenLocal()
+        maven { url 'https://plugins.gradle.org/m2/' }
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.eclipsesource.dockerizor:dockerizor:0.3.0.BUILD-SNAPSHOT'
+        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.3'
 	}
 }
 
 configure(virgoProjects + dockerProjects) {
-	apply plugin: "java"
+	apply plugin: 'java'
 	apply plugin: 'eclipse'
 
 	compileJava {
@@ -38,8 +38,8 @@ configure(virgoProjects + dockerProjects) {
 	repositories {
 		mavenLocal()
 		mavenCentral()
-		maven { url "http://repository.springsource.com/maven/bundles/external" }
-		maven { url "http://repository.springsource.com/maven/bundles/release" }
+		maven { url 'http://repository.springsource.com/maven/bundles/external' }
+		maven { url 'http://repository.springsource.com/maven/bundles/release' }
 	}
 }
 
