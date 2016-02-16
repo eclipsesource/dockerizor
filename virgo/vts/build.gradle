@@ -1,5 +1,3 @@
-apply plugin: 'dockerizor'
-
 dockerizor {
     description = 'Virgo Server for Apache Tomcat'
     repository = "eclipsesource/virgo-tomcat-server"

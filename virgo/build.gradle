@@ -6,10 +6,12 @@ ext.virgoProjects = [
 
 buildscript {
     repositories {
-        mavenLocal()
+        maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
     }
-    dependencies { classpath 'com.eclipsesource:dockerizor:0.2.0.BUILD-SNAPSHOT' }
+    dependencies {
+        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.4'
+    }
 }
 
 configure(virgoProjects) {
@@ -45,7 +47,7 @@ configure(virgoProjects) {
 }
 
 configure(virgoProjects) {
-    apply plugin: 'dockerizor'
+    apply plugin: 'com.eclipsesource.dockerizor'
 
     dockerizor {
         maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'

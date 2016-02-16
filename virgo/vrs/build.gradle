@@ -1,5 +1,3 @@
-apply plugin: 'dockerizor'
-
 dockerizor {
     description = 'Virgo RAP Server'
     repository = "eclipsesource/virgo-rap-server"

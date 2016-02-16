@@ -10,6 +10,8 @@ dockerizor {
 
     javaImage = 'java:openjdk-7u95-jre'
 
+    createLocalCopy = true
+
     virgoFlavour = 'VJS'
     removeAdminConsole = false
     removeSplash = false
