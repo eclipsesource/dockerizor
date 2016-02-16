@@ -10,6 +10,7 @@ class DockerizorExtension {
     String tag
 
     boolean dryRun
+    boolean createLocalCopy
 
     String javaImage
     String virgoVersion

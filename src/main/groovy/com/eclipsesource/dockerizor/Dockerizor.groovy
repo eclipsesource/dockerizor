@@ -17,6 +17,7 @@ class Dockerizor implements Plugin<Project> {
             tag = "latest"
 
             dryRun = false
+            createLocalCopy = false
 
             javaImage = 'java:openjdk-6b36-jre'
             virgoVersion = '3.6.4.RELEASE'

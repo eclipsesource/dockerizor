@@ -12,6 +12,8 @@ import com.github.dockerjava.core.DockerClientConfig
 import com.github.dockerjava.core.command.BuildImageResultCallback
 import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl
 
+import com.github.dockerjava.api.command.CreateContainerResponse
+
 class DockerizorTask extends DefaultTask {
 
     @OutputDirectory
@@ -20,6 +22,7 @@ class DockerizorTask extends DefaultTask {
     Dockerfile dockerfile = new Dockerfile()
 
     boolean dryRun
+    boolean createLocalCopy
 
     String uri
     String repository
@@ -36,6 +39,7 @@ class DockerizorTask extends DefaultTask {
         tag = project.dockerizor.tag
 
         dryRun = project.dockerizor.dryRun
+        createLocalCopy = project.dockerizor.createLocalCopy
 
         outputDir.mkdirs()
         dockerfile.init(new File(outputDir, "Dockerfile"))
@@ -51,12 +55,38 @@ class DockerizorTask extends DefaultTask {
             logger.warn("This is a dry-run. No Docker image will be created (and pushed)!")
         } else {
             logger.info("Creating image with repository:tag '${repository}:${tag}'...")
-            def configBuilder = DockerClientConfig.createDefaultConfigBuilder().withUri(uri);
-            DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder).withDockerCmdExecFactory(new DockerCmdExecFactoryImpl()).build();
+            def configBuilder = DockerClientConfig.createDefaultConfigBuilder().withUri(uri)
+            DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder).withDockerCmdExecFactory(new DockerCmdExecFactoryImpl()).build()
             BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder).withTag(repository + ':' + tag)
-            String imageId = buildImageCmd.exec(new BuildImageResultCallback()).awaitImageId();
+            String imageId = buildImageCmd.exec(new BuildImageResultCallback()).awaitImageId()
             logger.info("Created image [${imageId}]")
+
+            createLocalCopyIfRequested(dockerClient)
         }
+    }
+
+    private createLocalCopyIfRequested(DockerClient dockerClient) {
+        if (!createLocalCopy) {
+            logger.debug("Skipping creation of local copy.")
+            return
+        }
+        logger.info("Creating temporary container to create a copy of the custom Virgo runtime...")
+        CreateContainerResponse container = dockerClient.createContainerCmd("${repository}:${tag}")
+                .withName("dockerizor_tmp_" + System.currentTimeMillis()).exec()
+
+        InputStream response = dockerClient.copyFileFromContainerCmd(container.id, "/home/virgo").exec()
+        if (!response.available()) {
+            logger.error("Failed to create local copy of custom Virgo container!")
+        } else {
+            File localVirgoCopy = File.createTempFile("virgo-", ".tgz")
+            logger.info("Creating local copy of custom Virgo container {}", localVirgoCopy)
+            OutputStream fos = new FileOutputStream(localVirgoCopy)
+            fos << response
+            fos.close()
+        }
+
+        dockerClient.removeContainerCmd(container.id).exec()
+        logger.info("Removed temporary container '{}'.", container.id)
     }
 
     void 'FROM'(String imageName) {
@@ -102,7 +132,7 @@ class DockerizorTask extends DefaultTask {
     void 'CMD' (String command) {
         dockerfile.addCommand("CMD [\"${command}\"]")
     }
-    
+
     void 'USER' (String user) {
         logger.info "Switching to USER ${user}"
         dockerfile.addCommand("USER ${user}")
