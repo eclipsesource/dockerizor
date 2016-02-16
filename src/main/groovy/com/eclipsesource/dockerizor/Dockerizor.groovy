@@ -19,7 +19,7 @@ class Dockerizor implements Plugin<Project> {
             dryRun = false
             createLocalCopy = false
 
-            javaImage = 'java:openjdk-6b36-jre'
+            javaImage = 'java:openjdk-6b38-jre'
             virgoVersion = '3.6.4.RELEASE'
             hudsonJobName = 'gradle-build'
             virgoFlavour = 'VTS'
