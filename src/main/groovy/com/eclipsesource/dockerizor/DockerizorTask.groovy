@@ -78,7 +78,7 @@ class DockerizorTask extends DefaultTask {
         if (!response.available()) {
             logger.error("Failed to create local copy of custom Virgo container!")
         } else {
-            File localVirgoCopy = File.createTempFile("virgo-", ".tgz")
+            File localVirgoCopy = File.createTempFile("virgo-", ".tar")
             logger.info("Creating local copy of custom Virgo container {}", localVirgoCopy)
             OutputStream fos = new FileOutputStream(localVirgoCopy)
             fos << response
