@@ -41,4 +41,4 @@ pluginBundle {
 
 apply from: file('gradle/publish.gradle')
 
-task wrapper(type: Wrapper) { gradleVersion = '2.10' }
+task wrapper(type: Wrapper) { gradleVersion = '2.12' }
