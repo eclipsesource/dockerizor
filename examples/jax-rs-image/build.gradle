@@ -10,11 +10,11 @@ dockerizor {
 
     javaImage = 'java:openjdk-7u95-jre'
 
-    createLocalCopy = true
+    createLocalCopy = System.properties['local.build'] == 'true'
+    removeAdminConsole = System.properties['local.build'] != 'true'
+    removeSplash = System.properties['local.build'] != 'true'
 
     virgoFlavour = 'VJS'
-    removeAdminConsole = false
-    removeSplash = false
 
     pickupFiles = ['jax-rs-example.plan']
 
@@ -51,4 +51,6 @@ dockerizor {
         repositoryUsr project(':jax-rs')
     }
 
+    dockerize.dependsOn configurations.repositoryExt
+    dockerize.dependsOn configurations.repositoryUsr
 }

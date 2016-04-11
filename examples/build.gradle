@@ -3,11 +3,14 @@ ext.dockerProjects = [project(':jax-rs-image')]
 
 buildscript {
 	repositories {
+        if (System.properties['local.build'] == 'true') {
+            mavenLocal()
+        }
         maven { url 'https://plugins.gradle.org/m2/' }
 		jcenter()
 	}
 	dependencies {
-        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.4'
+        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.5'
 	}
 }
 
@@ -49,4 +52,4 @@ configure(project(':jax-rs')) {
 	}
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.10' }
+task wrapper(type: Wrapper) { gradleVersion = '2.12' }

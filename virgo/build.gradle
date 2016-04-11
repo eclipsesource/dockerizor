@@ -10,7 +10,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.4'
+        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.5'
     }
 }
 
@@ -53,8 +53,9 @@ configure(virgoProjects) {
         maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
         tag = '3.6.4.RELEASE'
 
-        removeAdminConsole = true
-        removeSplash = true
+        createLocalCopy = System.properties['local.build'] == 'true'
+        removeAdminConsole = System.properties['local.build'] != 'true'
+        removeSplash = System.properties['local.build'] != 'true'
 
         virgoVersion = '3.6.4.RELEASE'
         embeddedSpringVersion = '3.1.0.RELEASE'
@@ -64,7 +65,8 @@ configure(virgoProjects) {
 configure(virgoProjects) {
     dependencies {
         // only needed when using 3.2.4 in Virgo container
-        runtime "org.aspectj:com.springsource.org.aspectj.weaver:${aspectjWeaverVersion}"
+        // TODO - change version to 1.7.2
+        runtime "org.aspectj:oevm.org.aspectj.aspectjweaver:${aspectjWeaverVersion}"
 
         runtime "org.springframework:org.springframework.aop:${springframeworkVersion}"
         runtime "org.springframework:org.springframework.aspects:${springframeworkVersion}"
@@ -84,4 +86,4 @@ configure(virgoProjects) {
     }
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.10' }
+task wrapper(type: Wrapper) { gradleVersion = '2.12' }
