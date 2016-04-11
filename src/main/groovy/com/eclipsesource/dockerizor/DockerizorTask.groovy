@@ -70,15 +70,16 @@ class DockerizorTask extends DefaultTask {
             logger.debug("Skipping creation of local copy.")
             return
         }
+        def timestamp = new Date().format('yyyyMMddHHmmss', TimeZone.getTimeZone('GMT'))
         logger.info("Creating temporary container to create a copy of the custom Virgo runtime...")
         CreateContainerResponse container = dockerClient.createContainerCmd("${repository}:${tag}")
-                .withName("dockerizor_tmp_" + System.currentTimeMillis()).exec()
+                .withName("dockerizor_tmp_" + timestamp).exec()
 
         InputStream response = dockerClient.copyFileFromContainerCmd(container.id, "/home/virgo").exec()
         if (!response.available()) {
             logger.error("Failed to create local copy of custom Virgo container!")
         } else {
-            File localVirgoCopy = File.createTempFile("virgo-", ".tar")
+            File localVirgoCopy = new File(project.buildDir, "virgo-" + project.name + "-" + timestamp + ".tar")
             logger.info("Creating local copy of custom Virgo container {}", localVirgoCopy)
             OutputStream fos = new FileOutputStream(localVirgoCopy)
             fos << response
