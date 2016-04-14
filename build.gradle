@@ -3,7 +3,7 @@ buildscript {
         // Maven home of the plugin-publish-plugin
         maven { url "https://plugins.gradle.org/m2/" }
     }
-    dependencies { classpath "com.gradle.publish:plugin-publish-plugin:0.9.3" }
+    dependencies { classpath "com.gradle.publish:plugin-publish-plugin:0.9.4" }
 }
 
 apply plugin: 'groovy'
@@ -24,7 +24,7 @@ dependencies {
 }
 
 group = 'com.eclipsesource.dockerizor'
-version = '0.6.0.BUILD-SNAPSHOT'
+version = '0.6'
 
 pluginBundle {
     website = 'https://github.com/eclipsesource/dockerizor'
