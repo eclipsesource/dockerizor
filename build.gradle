@@ -20,6 +20,7 @@ dependencies {
     compile localGroovy()
 
     compile 'com.github.docker-java:docker-java:2.2.3'
+    compile 'de.gesellix:unix-socket-factory:2016-04-06T22-21-19'
 }
 
 group = 'com.eclipsesource.dockerizor'

@@ -12,7 +12,7 @@ class Dockerizor implements Plugin<Project> {
             description = '<no description>'
 
             // docker client configuration
-            uri = "http://localhost:4243"
+            uri = 'unix:///var/run/docker.sock'
             repository = "<unconfigured repository>"
             tag = "latest"
 
