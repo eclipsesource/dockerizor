@@ -43,7 +43,7 @@ class DockerizorTaskTest {
     public void dockerizorTaskShouldUseDefaultUri() {
         task.build()
 
-        assertEquals('http://localhost:4243', task.uri)
+        assertEquals('unix:///var/run/docker.sock', task.uri)
     }
 
 }
