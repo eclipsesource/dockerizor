@@ -19,7 +19,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
 
-    compile 'com.github.docker-java:docker-java:2.2.0'
+    compile 'com.github.docker-java:docker-java:2.2.3'
 }
 
 group = 'com.eclipsesource.dockerizor'
