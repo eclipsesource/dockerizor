@@ -49,11 +49,12 @@ class Dockerizor implements Plugin<Project> {
                 LABEL ("Description=\"${project.dockerizor.description}\"")
 
                 logger.info "Installing Virgo runtime (${project.dockerizor.virgoFlavour}) version ${project.dockerizor.virgoVersion}..."
-                def virgoHome = project.dockerizor.virgoHome
-                logger.info "Installing Virgo into ${virgoHome}."
                 RUN ("apt-get update")
                 RUN ("apt-get install -y curl bsdtar")
                 RUN ("useradd -m virgo")
+                def virgoHome = project.dockerizor.virgoHome
+                logger.info "Installing Virgo into ${virgoHome}."
+                RUN ("if [ ! -e ${virgoHome} ] ; then mkdir ${virgoHome}; fi")
                 logger.info "Using Virgo download URL: '${project.dockerizor.downloadUrl}'"
                 RUN ("curl -L '${project.dockerizor.downloadUrl}' | bsdtar --strip-components 1 -C ${virgoHome} -xzf -")
 
