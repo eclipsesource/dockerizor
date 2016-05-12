@@ -54,7 +54,7 @@ class Dockerizor implements Plugin<Project> {
                 RUN ("useradd -m virgo")
                 def virgoHome = project.dockerizor.virgoHome
                 logger.info "Installing Virgo into ${virgoHome}."
-                RUN ("if [ ! -e ${virgoHome} ] ; then mkdir ${virgoHome}; fi")
+                RUN ("if [ ! -e ${virgoHome} ] ; then mkdir -p ${virgoHome}; fi")
                 logger.info "Using Virgo download URL: '${project.dockerizor.downloadUrl}'"
                 RUN ("curl -L '${project.dockerizor.downloadUrl}' | bsdtar --strip-components 1 -C ${virgoHome} -xzf -")
 
