@@ -24,7 +24,7 @@ dependencies {
 }
 
 group = 'com.eclipsesource.dockerizor'
-version = '0.6.1'
+version = '0.6.2'
 
 pluginBundle {
     website = 'https://github.com/eclipsesource/dockerizor'
