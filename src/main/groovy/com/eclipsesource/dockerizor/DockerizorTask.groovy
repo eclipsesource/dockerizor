@@ -75,7 +75,7 @@ class DockerizorTask extends DefaultTask {
         CreateContainerResponse container = dockerClient.createContainerCmd("${repository}:${tag}")
                 .withName("dockerizor_tmp_" + timestamp).exec()
 
-        InputStream response = dockerClient.copyFileFromContainerCmd(container.id, "/home/virgo").exec()
+        InputStream response = dockerClient.copyFileFromContainerCmd(container.id, project.dockerizor.virgoHome).exec()
         if (!response.available()) {
             logger.error("Failed to create local copy of custom Virgo container!")
         } else {
