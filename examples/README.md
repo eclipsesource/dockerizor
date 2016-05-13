@@ -15,10 +15,10 @@ This will create the Docker image ``dockerizor-example/jax-rs``.
 
 ### Running the Container
 
-To start the previously dockerized application  
+To start the previously dockerized application in a temporary container execute the command:
 
     ::::sh
-    $ docker run -d --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-example/jax-rs
+    $ docker run -it --rm --name="jax-rs-example" --publish=8080:8080 --publish=9090:9090 -t dockerizor-example/jax-rs
 
 The command runs the ``jax-rs-example`` and publishes the ports ``8080`` and ``9090``.
 
@@ -38,7 +38,7 @@ The example exposes the OSGi HttpService on port ``9090`` with the rest service:
     Product Description :
     Simple writing instrument    
 
-The Virgo admin console is available at the default HTTP port of Virgo:
+The Virgo admin console is only available at the default HTTP port of Virgo when built with ``-Dlocal.build=true``:
 
 [http://localhost:8080/admin](http://localhost:8080/admin)
 

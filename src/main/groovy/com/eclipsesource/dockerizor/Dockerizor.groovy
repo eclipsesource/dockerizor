@@ -13,13 +13,13 @@ class Dockerizor implements Plugin<Project> {
 
             // docker client configuration
             uri = 'unix:///var/run/docker.sock'
-            repository = "<unconfigured repository>"
-            tag = "latest"
+            repository = '<unconfigured repository>'
+            tag = 'latest'
 
             dryRun = false
             createLocalCopy = false
 
-            javaImage = 'java:openjdk-6b38-jre'
+            javaImage = 'java:8u92-jre-alpine'
             virgoVersion = '3.6.4.RELEASE'
             hudsonJobName = 'gradle-build'
             virgoFlavour = 'VTS'
@@ -27,9 +27,8 @@ class Dockerizor implements Plugin<Project> {
             removeAdminConsole = true
             removeSplash = true
             enableUserRegionOsgiConsole = false
-            embeddedSpringVersion = '3.1.0.RELEASE'
             exposeHttpPort = true
-            hostname = "unconfigured_hostname"
+            hostname = 'unconfigured_hostname'
 
             postDockerizeHook = {  project.logger.debug "Running empty post processor" }
         }
@@ -49,9 +48,12 @@ class Dockerizor implements Plugin<Project> {
                 LABEL ("Description=\"${project.dockerizor.description}\"")
 
                 logger.info "Installing Virgo runtime (${project.dockerizor.virgoFlavour}) version ${project.dockerizor.virgoVersion}..."
-                RUN ("apt-get update")
-                RUN ("apt-get install -y curl bsdtar")
-                RUN ("useradd -m virgo")
+                RUN ("apk update")
+                RUN ("apk add curl libarchive-tools")
+                // startup.sh uses /bin/bash
+                RUN ("apk add bash")
+                // create a system user without home directory
+                RUN ("adduser -S -H virgo")
                 def virgoHome = project.dockerizor.virgoHome
                 logger.info "Installing Virgo into ${virgoHome}."
                 RUN ("if [ ! -e ${virgoHome} ] ; then mkdir -p ${virgoHome}; fi")
@@ -151,7 +153,7 @@ class Dockerizor implements Plugin<Project> {
                 project.dockerizor.postProcessor(project.dockerize)
                 logger.info "done"
 
-                RUN ("chown -R virgo:virgo ${virgoHome}")
+                RUN ("chown -R virgo ${virgoHome}")
                 USER ("virgo")
 
                 CMD ("${virgoHome}/bin/startup.sh")

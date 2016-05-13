@@ -5,5 +5,4 @@ dockerizor {
 	virgoFlavour = 'VRS'
 
     virgoVersion = 'latest'
-    embeddedSpringVersion = '3.2.10.RELEASE'
 }

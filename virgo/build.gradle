@@ -6,11 +6,18 @@ ext.virgoProjects = [
 
 buildscript {
     repositories {
+        if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
+            mavenLocal()
+        }
         maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
     }
     dependencies {
-        classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.5'
+        if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
+            classpath 'com.eclipsesource.dockerizor:dockerizor:0.7.0.BUILD-SNAPSHOT'
+        } else {
+            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.6.3'
+        }
     }
 }
 
@@ -30,19 +37,11 @@ configure(virgoProjects) {
         }
     }
 
-    ext {
-        springframeworkVersion = '3.2.4.RELEASE' // EBR doesn't contain all 3.2.5 artifacts :(
-        aspectjWeaverVersion = '1.7.2.RELEASE'
-        cglibVersion = '2.2'
-
-        rapVersion = '2.3.0'
-    }
+    ext { rapVersion = '2.3.0' }
 
     repositories {
         mavenLocal()
         mavenCentral()
-        maven { url "http://repository.springsource.com/maven/bundles/external" }
-        maven { url "http://repository.springsource.com/maven/bundles/release" }
     }
 }
 
@@ -51,39 +50,14 @@ configure(virgoProjects) {
 
     dockerizor {
         maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
-        tag = '3.6.4.RELEASE'
+        tag = '3.7.0.M03'
 
         createLocalCopy = System.properties['local.build'] == 'true'
         removeAdminConsole = System.properties['local.build'] != 'true'
         removeSplash = System.properties['local.build'] != 'true'
 
-        virgoVersion = '3.6.4.RELEASE'
-        embeddedSpringVersion = '3.1.0.RELEASE'
+        virgoVersion = '3.7.0.M03'
     }
 }
 
-configure(virgoProjects) {
-    dependencies {
-        // only needed when using 3.2.4 in Virgo container
-        // TODO - change version to 1.7.2
-        runtime "org.aspectj:oevm.org.aspectj.aspectjweaver:${aspectjWeaverVersion}"
-
-        runtime "org.springframework:org.springframework.aop:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.aspects:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.beans:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.context:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.context.support:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.core:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.expression:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.jdbc:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.jms:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.orm:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.oxm:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.transaction:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.web:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.web.servlet:${springframeworkVersion}"
-        runtime "org.springframework:org.springframework.web.portlet:${springframeworkVersion}"
-    }
-}
-
-task wrapper(type: Wrapper) { gradleVersion = '2.12' }
+task wrapper(type: Wrapper) { gradleVersion = '2.14' }

@@ -19,7 +19,7 @@ Change into the directory that contains your Dockerfile and build your image.
 
 The following command starts the Virgo Server for Apache Tomcat in a Docker container and exposes the port ``8080``.
 
-    docker run -d --name="virgo-tomcat-server" --publish=8080:8080 -t eclipsesource/virgo-tomcat-server:latest
+    docker run -it --rm --name="virgo-tomcat-server" --publish=8080:8080 -t eclipsesource/virgo-tomcat-server:latest
 
 # Accessing your Web Application
 

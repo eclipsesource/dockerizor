@@ -8,7 +8,7 @@ dockerizor {
     maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
     description = 'Virgo JAX-RS examples created with Gradle Plugin: com.eclipsesource.dockerizor'
 
-    javaImage = 'java:openjdk-7u95-jre'
+    javaImage = 'java:7u91-jre-alpine'
 
     createLocalCopy = System.properties['local.build'] == 'true'
     removeAdminConsole = System.properties['local.build'] != 'true'

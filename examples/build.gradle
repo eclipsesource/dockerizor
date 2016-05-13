@@ -3,7 +3,7 @@ ext.dockerProjects = [project(':jax-rs-image')]
 
 buildscript {
 	repositories {
-        if (System.properties['local.build'] == 'true') {
+        if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
             mavenLocal()
         }
         maven { url 'https://plugins.gradle.org/m2/' }
@@ -11,9 +11,9 @@ buildscript {
 	}
 	dependencies {
         if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
-            classpath 'com.eclipsesource.dockerizor:dockerizor:0.6.0.BUILD-SNAPSHOT'
+            classpath 'com.eclipsesource.dockerizor:dockerizor:0.7.0.BUILD-SNAPSHOT'
         } else {
-            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.5'
+            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.6.3'
         }
 	}
 }
@@ -34,14 +34,6 @@ configure(virgoProjects + dockerProjects) {
 		}
 	}
 
-	ext {
-		springframeworkVersion = '3.2.10.RELEASE'
-		aspectjWeaverVersion = '1.7.2.RELEASE'
-		cglibVersion = '2.2'
-
-		rapVersion = '2.3.0'
-	}
-
 	repositories {
 		mavenLocal()
 		mavenCentral()
@@ -56,4 +48,4 @@ configure(project(':jax-rs')) {
 	}
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.12' }
+task wrapper(type: Wrapper) { gradleVersion = '2.14' }

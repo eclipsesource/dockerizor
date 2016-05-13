@@ -21,6 +21,8 @@ dependencies {
 
     compile 'com.github.docker-java:docker-java:2.2.3'
     compile 'de.gesellix:unix-socket-factory:2016-04-06T22-21-19'
+
+    testCompile 'junit:junit:4.12'
 }
 
 group = 'com.eclipsesource.dockerizor'
@@ -42,4 +44,4 @@ pluginBundle {
 
 apply from: file('gradle/publish.gradle')
 
-task wrapper(type: Wrapper) { gradleVersion = '2.13' }
+task wrapper(type: Wrapper) { gradleVersion = '2.14' }
