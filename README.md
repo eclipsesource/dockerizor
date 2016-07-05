@@ -24,7 +24,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.6.3"
+    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.7.0"
   }
 }
 
@@ -44,7 +44,7 @@ dockerizor {
   uri = "http://localhost:4243"
   tag = "latest"
 
-  javaImage = 'java:openjdk-6b36-jre'
+  javaImage = 'java:8u92-jre-alpine'
 }
 ```
 
