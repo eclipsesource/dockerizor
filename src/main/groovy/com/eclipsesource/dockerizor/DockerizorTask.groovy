@@ -22,6 +22,8 @@ class DockerizorTask extends DefaultTask {
     Dockerfile dockerfile = new Dockerfile()
 
     boolean dryRun
+    boolean noCache
+
     boolean createLocalCopy
 
     String uri
@@ -39,6 +41,8 @@ class DockerizorTask extends DefaultTask {
         tag = project.dockerizor.tag
 
         dryRun = project.dockerizor.dryRun
+        noCache = project.dockerizor.noCache
+
         createLocalCopy = project.dockerizor.createLocalCopy
 
         outputDir.mkdirs()
@@ -60,6 +64,7 @@ class DockerizorTask extends DefaultTask {
             BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder)
             buildImageCmd.withTag(repository + ':' + tag)
             buildImageCmd.withRemove(true)
+            buildImageCmd.withNoCache(noCache)
             String imageId = buildImageCmd.exec(new BuildImageResultCallback()).awaitImageId()
             logger.info("Created image [${imageId}]")
 

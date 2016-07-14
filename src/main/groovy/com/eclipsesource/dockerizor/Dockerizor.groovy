@@ -17,6 +17,8 @@ class Dockerizor implements Plugin<Project> {
             tag = 'latest'
 
             dryRun = false
+            noCache = true
+
             createLocalCopy = false
 
             javaImage = 'java:8u92-jre-alpine'

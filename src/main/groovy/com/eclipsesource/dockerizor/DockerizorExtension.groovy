@@ -10,6 +10,8 @@ class DockerizorExtension {
     String tag
 
     boolean dryRun
+    boolean noCache
+
     boolean createLocalCopy
 
     String javaImage
