@@ -59,6 +59,7 @@ class DockerizorTask extends DefaultTask {
             DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder).withDockerCmdExecFactory(new DockerCmdExecFactoryImpl()).build()
             BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder)
             buildImageCmd.withTag(repository + ':' + tag)
+            buildImageCmd.withRemove(true)
             String imageId = buildImageCmd.exec(new BuildImageResultCallback()).awaitImageId()
             logger.info("Created image [${imageId}]")
 
