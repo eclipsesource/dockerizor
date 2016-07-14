@@ -55,9 +55,10 @@ class DockerizorTask extends DefaultTask {
             logger.warn("This is a dry-run. No Docker image will be created (and pushed)!")
         } else {
             logger.info("Creating image with repository:tag '${repository}:${tag}'...")
-            def configBuilder = DockerClientConfig.createDefaultConfigBuilder().withUri(uri)
+            def configBuilder = DockerClientConfig.createDefaultConfigBuilder().withDockerHost(uri)
             DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder).withDockerCmdExecFactory(new DockerCmdExecFactoryImpl()).build()
-            BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder).withTag(repository + ':' + tag)
+            BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder)
+            buildImageCmd.withTag(repository + ':' + tag)
             String imageId = buildImageCmd.exec(new BuildImageResultCallback()).awaitImageId()
             logger.info("Created image [${imageId}]")
 
@@ -75,7 +76,7 @@ class DockerizorTask extends DefaultTask {
         CreateContainerResponse container = dockerClient.createContainerCmd("${repository}:${tag}")
                 .withName("dockerizor_tmp_" + timestamp).exec()
 
-        InputStream response = dockerClient.copyFileFromContainerCmd(container.id, project.dockerizor.virgoHome).exec()
+        InputStream response = dockerClient.copyArchiveFromContainerCmd(container.id, project.dockerizor.virgoHome).exec()
         if (!response.available()) {
             logger.error("Failed to create local copy of custom Virgo container!")
         } else {
