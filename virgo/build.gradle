@@ -50,13 +50,13 @@ configure(virgoProjects) {
 
     dockerizor {
         maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
-        tag = '3.7.0.M03'
+        tag = System.getenv("dockerizor.tag") ?: 'latest'
 
-        createLocalCopy = System.properties['local.build'] == 'true'
-        removeAdminConsole = System.properties['local.build'] != 'true'
-        removeSplash = System.properties['local.build'] != 'true'
+        createLocalCopy = System.properties['dockerizor.createLocalCopy'] ?: false
+        removeAdminConsole = System.properties['dockerizor.removeAdminConsole'] ?: true
+        removeSplash = System.properties['dockerizor.removeSplash'] ?: true
 
-        virgoVersion = '3.7.0.M03'
+        virgoVersion = System.getenv("dockerizor.virgoVersion") ?: 'latest'
     }
 }
 
