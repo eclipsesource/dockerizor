@@ -24,7 +24,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.7.0"
+    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.0"
   }
 }
 
