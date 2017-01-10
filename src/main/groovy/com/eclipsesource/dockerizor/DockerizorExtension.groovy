@@ -17,6 +17,7 @@ class DockerizorExtension {
     String javaImage
     String virgoVersion
     String hudsonJobName
+    String hudsonJobNumber
     String virgoFlavour
     String virgoHome
     String hostname
@@ -55,14 +56,14 @@ class DockerizorExtension {
                     case 'latest':
                     return "virgo-jetty-server-latest"
                     default:
-                    return "virgo-jetty-server-${virgoVersion}.zip"
+                    return "virgo-jetty-server-${virgoVersion}"
                 }
             case 'VTS':
                 switch (virgoVersion) {
                     case 'latest':
                     return "virgo-tomcat-server-latest"
                     default:
-                    return "virgo-tomcat-server-${virgoVersion}.zip"
+                    return "virgo-tomcat-server-${virgoVersion}"
                 }
             case 'VRS':
                 switch (virgoVersion) {
@@ -82,11 +83,15 @@ class DockerizorExtension {
             case 'VTS':
                 switch (virgoVersion) {
                     case 'latest':
-                    return "https://hudson.eclipse.org/virgo/job/${hudsonJobName}/lastSuccessfulBuild/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
+                    case ~/.*D-\d{14}/: 
+                        if(!hudsonJobNumber) {
+                            hudsonJobNumber='lastSuccessfulBuild'
+                        }
+                        return "https://hudson.eclipse.org/virgo/job/${hudsonJobName}/${hudsonJobNumber}/artifact/packaging/${shortName}/build/distributions/${archiveName}.zip"
                     case ~/.*M\d{2}/:
-                    return "http://www.eclipse.org/downloads/download.php?file=/virgo/milestone/${virgoFlavour}/${archiveName}&mirror_id=580&r=1"
+                    return "http://www.eclipse.org/downloads/download.php?file=/virgo/milestone/${virgoFlavour}/${archiveName}.zip&mirror_id=580&r=1"
                     default:
-                    return "http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/${virgoVersion}/${archiveName}&mirror_id=580&r=1"
+                    return "http://www.eclipse.org/downloads/download.php?file=/virgo/release/VP/${virgoVersion}/${archiveName}.zip&mirror_id=580&r=1"
                 }
             case 'VRS':
                 switch (virgoVersion) {
@@ -100,3 +105,4 @@ class DockerizorExtension {
         }
     }
 }
+

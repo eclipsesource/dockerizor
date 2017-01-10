@@ -2,6 +2,7 @@ package com.eclipsesource.dockerizor
 import static org.junit.Assert.assertThat
 
 import static org.hamcrest.CoreMatchers.containsString
+import static org.hamcrest.CoreMatchers.endsWith
 import static org.junit.Assert.assertThat
 
 import org.junit.Ignore
@@ -87,4 +88,75 @@ class DockerizorExtensionTest {
         assertThat(uut.downloadUrl, containsString("VJS"));
         assertThat(uut.downloadUrl, containsString("release"));
     }
+
+    /*
+     *   https://hudson.eclipse.org/virgo/job/gradle-build/lastSuccessfulBuild/artifact/packaging/tomcat-server/build/distributions/virgo-tomcat-server-latest.zip
+     */
+    @Test
+    public void shouldSupportLatestDevelopmentVersionDownloadOfVirgoTomcatServer() {
+        DockerizorExtension uut = new DockerizorExtension (
+                virgoVersion:'latest',
+                virgoFlavour:'VTS',
+                hudsonJobName:'gradle-build'
+                )
+
+        println "Resulting download URL ==> ${uut.downloadUrl}"
+
+        assertThat(uut.downloadUrl, containsString("/gradle-build/lastSuccessfulBuild/"));
+        assertThat(uut.downloadUrl, endsWith("/virgo-tomcat-server-latest.zip"));
+    }
+
+    /*
+     *  https://hudson.eclipse.org/virgo/job/gradle-build/782/artifact/packaging/tomcat-server/build/distributions/virgo-tomcat-server-3.7.0.D-20161218094003.zip
+     */
+    @Test
+    public void shouldSupportSpecificDevelopmentVersionDownloadWithSpecificBuildNumberOfVirgoTomcatServer() {
+        DockerizorExtension uut = new DockerizorExtension (
+                virgoVersion:'3.7.0.D-20161218094003',
+                virgoFlavour:'VTS',
+                hudsonJobName:'gradle-build',
+                hudsonJobNumber:'782'
+                )
+
+        println "Resulting download URL ==> ${uut.downloadUrl}"
+
+        assertThat(uut.downloadUrl, containsString("/gradle-build/782/"));
+        assertThat(uut.downloadUrl, endsWith("/virgo-tomcat-server-3.7.0.D-20161218094003.zip"));
+    }
+
+    /*
+     *  https://hudson.eclipse.org/virgo/job/gradle-build/782/artifact/packaging/tomcat-server/build/distributions/virgo-tomcat-server-latest.zip
+     */
+    @Test
+    public void shouldSupportLatestDevelopmentVersionDownloadWithSpecificBuildNumberOfVirgoTomcatServer() {
+        DockerizorExtension uut = new DockerizorExtension (
+                virgoVersion:'latest',
+                virgoFlavour:'VTS',
+                hudsonJobName:'gradle-build',
+                hudsonJobNumber:'782'
+                )
+
+        println "Resulting download URL ==> ${uut.downloadUrl}"
+
+        assertThat(uut.downloadUrl, containsString("/gradle-build/782/"));
+        assertThat(uut.downloadUrl, endsWith("/virgo-tomcat-server-latest.zip"));
+    }
+
+    /*
+     *
+     */
+    @Test
+    public void shouldSupportSpecificDevelopmentVersionDownloadOfVirgoTomcatServer() {
+        DockerizorExtension uut = new DockerizorExtension (
+                virgoVersion:'3.7.0.D-20161218094003',
+                virgoFlavour:'VTS',
+                hudsonJobName:'gradle-build'
+                )
+
+        println "Resulting download URL ==> ${uut.downloadUrl}"
+
+        assertThat(uut.downloadUrl, containsString("/gradle-build/lastSuccessfulBuild/"));
+        assertThat(uut.downloadUrl, endsWith("/virgo-tomcat-server-3.7.0.D-20161218094003.zip"));
+    }
 }
+
