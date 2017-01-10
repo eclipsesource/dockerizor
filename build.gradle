@@ -3,7 +3,7 @@ buildscript {
         // Maven home of the plugin-publish-plugin
         maven { url "https://plugins.gradle.org/m2/" }
     }
-    dependencies { classpath "com.gradle.publish:plugin-publish-plugin:0.9.4" }
+    dependencies { classpath "com.gradle.publish:plugin-publish-plugin:0.9.7" }
 }
 
 apply plugin: 'groovy'
