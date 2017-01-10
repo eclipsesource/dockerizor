@@ -15,7 +15,7 @@ In a first step we automated the generation of basic Virgo images.
 ### Using the Gradle Plugin
 
 The following build snippet applies the [Gradle Plugin Dockerizor][dockerizor] to your build script:
- 
+
 ```
 buildscript {
   repositories {
@@ -24,7 +24,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.0"
+    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.1"
   }
 }
 
@@ -48,7 +48,7 @@ dockerizor {
 }
 ```
 
-...and Virgo specific configuration is done within the ```dockerizor``` block. 
+...and Virgo specific configuration is done within the ```dockerizor``` block.
 
 ```groovy
 dockerizor {
