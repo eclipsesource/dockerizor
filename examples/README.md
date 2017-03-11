@@ -6,7 +6,7 @@ The code is based on the DS example from the [OSGi - JAX-RS Connector][jax-rs-co
 
 ### Build the Docker Image
 
-Please note: The following step acts on the assumption that you have a Docker daemon running locally on port ``4243``.
+Please note: The following step acts on the assumption that you have a Docker daemon running locally.
 
     ::::sh
     $ ./gradlew build dockerize
