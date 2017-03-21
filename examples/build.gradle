@@ -11,9 +11,9 @@ buildscript {
 	}
 	dependencies {
         if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
-            classpath 'com.eclipsesource.dockerizor:dockerizor:0.8.1.BUILD-SNAPSHOT'
+            classpath 'com.eclipsesource.dockerizor:dockerizor:0.8.2.BUILD-SNAPSHOT'
         } else {
-            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.0'
+            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.1'
         }
 	}
 }
@@ -23,14 +23,14 @@ configure(virgoProjects + dockerProjects) {
 	apply plugin: 'eclipse'
 
 	compileJava {
-		sourceCompatibility = '1.7'
-		targetCompatibility = '1.7'
+		sourceCompatibility = '1.8'
+		targetCompatibility = '1.8'
 	}
 
 	eclipse {
 		jdt {
-			sourceCompatibility = '1.7'
-			targetCompatibility = '1.7'
+			sourceCompatibility = '1.8'
+			targetCompatibility = '1.8'
 		}
 	}
 

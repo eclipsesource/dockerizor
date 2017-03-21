@@ -8,8 +8,6 @@ dockerizor {
     maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
     description = 'Virgo JAX-RS examples created with Gradle Plugin: com.eclipsesource.dockerizor'
 
-    javaImage = 'java:7u91-jre-alpine'
-
     createLocalCopy = System.properties['local.build'] == 'true'
     removeAdminConsole = System.properties['local.build'] != 'true'
     removeSplash = System.properties['local.build'] != 'true'
@@ -19,8 +17,9 @@ dockerizor {
     pickupFiles = ['jax-rs-example.plan']
 
     postDockerizeHook = { task ->
-        logger.info "Adding JavaSE-1.7 to configuration/java6-server.profile"
-        task.RUN "sed -i 's/JavaSE-1.6/JavaSE-1.6,\\\\\\n JavaSE-1.7/' ${project.dockerizor.virgoHome}/configuration/java6-server.profile"
+        logger.info "Adding JavaSE-1.8 to configuration/java-server.profile"
+        task.RUN "sed -i 's/JavaSE-1.7/JavaSE-1.7,\\\\\\n JavaSE-1.8/' ${project.dockerizor.virgoHome}/configuration/java-server.profile"
+        task.RUN "sed -i 's/1.6, 1.7/1.6, 1.7, 1.8/' ${project.dockerizor.virgoHome}/configuration/java-server.profile"
         logger.info "Changing org.osgi.service.http.port=8080 to 9090"
         task.RUN "sed -i 's/8080/9090/' ${project.dockerizor.virgoHome}/configuration/config.ini"
         task.EXPOSE 9090
