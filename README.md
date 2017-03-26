@@ -24,7 +24,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.1"
+    classpath "gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.2"
   }
 }
 
@@ -64,7 +64,7 @@ The snippet above creates a Docker image named 'virgo-jetty-server' with the Vir
 
 ```sh
 $ docker images | grep virgo-jetty-server
-eclipsesource/virgo-jetty-server   3.6.4.RELEASE       0f900c762dcf        5 minutes ago       332.7 MB
+eclipsesource/virgo-jetty-server   3.7.0.RELEASE       699523df1053        5 minutes ago       161 MB
 ```
 
 The generated basic images for Virgo are available via [Docker Hub][dockerhub]:
