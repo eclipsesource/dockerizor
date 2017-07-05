@@ -20,7 +20,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
 
-    compile 'com.github.docker-java:docker-java:3.0.0'
+    compile 'com.github.docker-java:docker-java:3.0.11'
     compile 'de.gesellix:unix-socket-factory:2016-04-06T22-21-19'
 
     testCompile 'junit:junit:4.12'
