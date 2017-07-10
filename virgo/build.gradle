@@ -50,7 +50,7 @@ configure(virgoProjects) {
 
     dockerizor {
         maintainer = 'Florian Waibel <fwaibel@eclipsesource.com>'
-        tag = '3.7.0.RELEASE'
+        tag = '3.7.1.RELEASE'
 
         createLocalCopy = System.properties['dockerizor.createLocalCopy'] ?: false
         removeAdminConsole = System.properties['dockerizor.removeAdminConsole'] ?: true
