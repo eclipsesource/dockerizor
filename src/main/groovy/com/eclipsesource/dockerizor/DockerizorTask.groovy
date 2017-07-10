@@ -1,19 +1,15 @@
 package com.eclipsesource.dockerizor
 
-import org.gradle.api.DefaultTask
-import org.gradle.api.logging.Logger
-import org.gradle.api.tasks.OutputDirectory
-import org.gradle.api.tasks.TaskAction
-
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.BuildImageCmd
-import com.github.dockerjava.core.DefaultDockerClientConfig.Builder;
+import com.github.dockerjava.api.command.CreateContainerResponse
+import com.github.dockerjava.core.DefaultDockerClientConfig
 import com.github.dockerjava.core.DockerClientBuilder
-import com.github.dockerjava.core.DockerClientConfig
 import com.github.dockerjava.core.command.BuildImageResultCallback
 import com.github.dockerjava.jaxrs.DockerCmdExecFactoryImpl
-
-import com.github.dockerjava.api.command.CreateContainerResponse
+import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
 
 class DockerizorTask extends DefaultTask {
 
