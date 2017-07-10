@@ -14,9 +14,9 @@ buildscript {
     }
     dependencies {
         if (System.properties['use.local.dockerizor.snapshot'] == 'true') {
-            classpath 'com.eclipsesource.dockerizor:dockerizor:0.8.2.BUILD-SNAPSHOT'
+            classpath 'com.eclipsesource.dockerizor:dockerizor:0.8.3.BUILD-SNAPSHOT'
         } else {
-            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.1'
+            classpath 'gradle.plugin.com.eclipsesource.dockerizor:dockerizor:0.8.2'
         }
     }
 }
