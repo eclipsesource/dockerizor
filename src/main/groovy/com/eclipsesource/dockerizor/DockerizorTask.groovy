@@ -7,6 +7,7 @@ import org.gradle.api.tasks.TaskAction
 
 import com.github.dockerjava.api.DockerClient
 import com.github.dockerjava.api.command.BuildImageCmd
+import com.github.dockerjava.core.DefaultDockerClientConfig.Builder;
 import com.github.dockerjava.core.DockerClientBuilder
 import com.github.dockerjava.core.DockerClientConfig
 import com.github.dockerjava.core.command.BuildImageResultCallback
@@ -59,7 +60,7 @@ class DockerizorTask extends DefaultTask {
             logger.warn("This is a dry-run. No Docker image will be created (and pushed)!")
         } else {
             logger.info("Creating image with repository:tag '${repository}:${tag}'...")
-            def configBuilder = DockerClientConfig.createDefaultConfigBuilder().withDockerHost(uri)
+            def configBuilder = new DefaultDockerClientConfig.Builder().withDockerHost(uri)
             DockerClient dockerClient = DockerClientBuilder.getInstance(configBuilder).withDockerCmdExecFactory(new DockerCmdExecFactoryImpl()).build()
             BuildImageCmd buildImageCmd = dockerClient.buildImageCmd(dockerFileOrFolder)
             buildImageCmd.withTag(repository + ':' + tag)
