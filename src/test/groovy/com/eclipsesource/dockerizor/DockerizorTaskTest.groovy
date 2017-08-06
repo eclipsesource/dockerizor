@@ -26,21 +26,21 @@ class DockerizorTaskTest {
     }
 
     @Test
-    public void dockerizorTaskShouldCreateDockerWorkingDirectory() {
+    void dockerizorTaskShouldCreateDockerWorkingDirectory() {
         task.build()
 
         assertTrue task.outputDir.exists()
     }
 
     @Test
-    public void dockerizorTaskShouldCreateDockerfile() {
+    void dockerizorTaskShouldCreateDockerfile() {
         task.build()
 
         assertTrue dockerfile.exists()
     }
 
     @Test
-    public void dockerizorTaskShouldUseDefaultUri() {
+    void dockerizorTaskShouldUseDefaultUri() {
         task.build()
 
         assertEquals('unix:///var/run/docker.sock', task.uri)
