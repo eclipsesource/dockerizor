@@ -47,5 +47,3 @@ configure(project(':jax-rs')) {
 		compile 'com.eclipsesource.jaxrs:jersey-all:2.10.1'
 	}
 }
-
-task wrapper(type: Wrapper) { gradleVersion = '4.0.2' }
