@@ -1,7 +1,5 @@
 package com.eclipsesource.dockerizor
 
-import java.util.List
-
 import org.gradle.api.GradleException
 
 class Dockerfile {
