@@ -11,6 +11,10 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.TaskAction
 
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
 class DockerizorTask extends DefaultTask {
 
     @OutputDirectory
@@ -101,6 +105,16 @@ class DockerizorTask extends DefaultTask {
 
     void 'RUN'(String command) {
         dockerfile.addCommand('RUN ' + command)
+    }
+
+    void 'ADD_ENTRYPOINT'(String destination) {
+        InputStream resourceStream = this.class.getResourceAsStream("/entrypoint.sh")
+        byte[] entrypointContent = new byte[resourceStream.available()]
+        resourceStream.read(entrypointContent)
+
+        Path entrypointScript = Paths.get(outputDir.absolutePath, "entrypoint.sh");
+        Files.write(entrypointScript, entrypointContent);
+        dockerfile.addCommand("ADD entrypoint.sh ${destination}")
     }
 
     void 'ADD'(String fileName, String destination) {

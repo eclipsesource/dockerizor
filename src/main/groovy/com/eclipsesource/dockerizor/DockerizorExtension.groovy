@@ -29,6 +29,8 @@ class DockerizorExtension {
     String[] pickupFiles
     String[] binFiles
 
+    String entryPoint
+
     Closure postDockerizeHook = {
     }
 

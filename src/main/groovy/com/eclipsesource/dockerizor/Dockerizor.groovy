@@ -30,10 +30,10 @@ class Dockerizor implements Plugin<Project> {
             removeSplash = true
             enableUserRegionOsgiConsole = false
             exposeHttpPort = true
-            hostname = 'unconfigured_hostname'
 
             pickupFiles = []
             binFiles = []
+            entryPoint = 'entrypoint.sh'
 
             postDockerizeHook = {  project.logger.debug "Running empty post processor" }
         }
@@ -59,7 +59,11 @@ class Dockerizor implements Plugin<Project> {
                 RUN ("apk add bash")
                 // create a system user without home directory
                 RUN ("adduser -S -H virgo")
+
                 def virgoHome = project.dockerizor.virgoHome
+                ENV ('VIRGO_HOME', project.dockerizor.virgoHome)
+                ENV ('VIRGO_FLAVOUR', project.dockerizor.virgoFlavour)
+
                 logger.info "Installing Virgo into ${virgoHome}."
                 RUN ("if [ ! -e ${virgoHome} ] ; then mkdir -p ${virgoHome}; fi")
                 logger.info "Using Virgo download URL: '${project.dockerizor.downloadUrl}'"
@@ -103,7 +107,6 @@ class Dockerizor implements Plugin<Project> {
                             logger.info "NOTE: The telnet.host has to be set with -h ${project.dockerizor.hostname} when starting this container!"
                             logger.info "      Otherwise the OSGi console will not be accessable"
                             RUN ("sed -i 's/telnet.enabled=false/telnet.enabled=true/' ${virgoHome}/repository/ext/osgi.console.properties")
-                            RUN ("sed -i 's/telnet.host=localhost/telnet.host=${project.dockerizor.hostname}/' ${virgoHome}/repository/ext/osgi.console.properties")
                             break
                         default:
                             logger.warn "Ignoring request to enable user region OSGi console for ${project.dockerizor.virgoFlavour}."
@@ -134,6 +137,10 @@ class Dockerizor implements Plugin<Project> {
                 }
                 logger.info "done"
 
+                logger.info "Add entrypoint.sh"
+                ADD_ENTRYPOINT ("${virgoHome}/bin/")
+                logger.info "done"
+
                 RUN ("chmod u+x ${virgoHome}/bin/*.sh")
 
                 logger.info "Provisioning Virgo endorsed:"
@@ -161,7 +168,7 @@ class Dockerizor implements Plugin<Project> {
                 RUN ("chown -R virgo ${virgoHome}")
                 USER ("virgo")
 
-                CMD ("${virgoHome}/bin/startup.sh")
+                CMD ("${virgoHome}/bin/entrypoint.sh")
             }
             doLast() { logger.info "Successful dockerized '${project.dockerizor.repository}'." }
         }
