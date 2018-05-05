@@ -21,9 +21,9 @@ class Dockerizor implements Plugin<Project> {
 
             createLocalCopy = false
 
-            virgoVersion = '3.7.1.RELEASE'
-            hudsonJobName = 'gradle-build'
             javaImage = 'openjdk:8u151-jre-alpine'
+            virgoVersion = '3.7.2.RELEASE'
+            hudsonJobName = 'virgo-release'
             virgoFlavour = 'VTS'
             virgoHome = '/home/virgo'
             removeAdminConsole = true
