@@ -118,7 +118,8 @@ class Dockerizor implements Plugin<Project> {
                         case 'VJS':
                         case 'VTS':
                         case 'VRS':
-                            EXPOSE 8080
+                            EXPOSE 8080 // HTTP
+                            EXPOSE 8443 // HTTPS
                             break
                         default:
                             logger.warn "Ignoring request to expose HTTP port for ${project.dockerizor.virgoFlavour}."
