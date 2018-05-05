@@ -32,6 +32,9 @@ class Dockerizor implements Plugin<Project> {
             exposeHttpPort = true
             hostname = 'unconfigured_hostname'
 
+            pickupFiles = []
+            binFiles = []
+
             postDockerizeHook = {  project.logger.debug "Running empty post processor" }
         }
 
